@@ -1,2 +1,2 @@
-# PhD1
+# My PhD thesis
 Work related with my PhD
