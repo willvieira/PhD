@@ -57,15 +57,15 @@ get_pars = function(ENV1, ENV2, params, int) {
 	logit_betat 	= params["bt0", 1] + params["bt1", 1] * ENV1 + params["bt2", 1] * ENV2 + params["bt3", 1] * ENV1^2 + params["bt4",1]*ENV2^2 + params["bt5",1]*ENV1^3 + params["bt6",1]*ENV2^3
 	logit_theta		= params["th0", 1] + params["th1", 1] * ENV1 + params["th2", 1] * ENV2 + params["th3", 1] * ENV1^2 + params["th4",1]*ENV2^2 + params["th5",1]*ENV1^3 + params["th6",1]*ENV2^3
 	logit_thetat	= params["tt0", 1] + params["tt1", 1] * ENV1 + params["tt2", 1] * ENV2 + params["tt3", 1] * ENV1^2 + params["tt4",1]*ENV2^2 + params["tt5",1]*ENV1^3 + params["tt6",1]*ENV2^3
-	logit_eps 		= params["e0", 1]  + params["e1", 1] * ENV1 + params["e2", 1] * ENV2  + params["e3", 1] * ENV1^2 + params["e4",1]*ENV2^2 + params["e5",1]*ENV1^3 + params["e6",1]*ENV2^3
+	logit_eps 		= params["e0", 1]  + params["e1", 1]  * ENV1 + params["e2", 1]  * ENV2 + params["e3", 1]  * ENV1^2 + params["e4",1] *ENV2^2 + params["e5",1] *ENV1^3 + params["e6",1] *ENV2^3
 
 	alphab = 1-(1-logit_reverse(logit_alphab))^int
 	alphat = 1-(1-logit_reverse(logit_alphat))^int
-	betab = 1-(1-logit_reverse(logit_betab))^int
-	betat = 1-(1-logit_reverse(logit_betat))^int
-	theta = 1-(1-logit_reverse(logit_theta))^int
+	betab  = 1-(1-logit_reverse(logit_betab))^int
+	betat  = 1-(1-logit_reverse(logit_betat))^int
+	theta  = 1-(1-logit_reverse(logit_theta))^int
 	thetat = 1-(1-logit_reverse(logit_thetat))^int
-	eps = 1-(1-logit_reverse(logit_eps))^int
+	eps    = 1-(1-logit_reverse(logit_eps))^int
 
 	return(c(alphab = alphab, alphat = alphat, betab = betab, betat = betat, theta = theta, thetat = thetat, eps = eps))
 
@@ -115,7 +115,7 @@ get_matrix = function(ENV1, ENV2, params, int) {
 	MAT[4,3] = pars["betat"]*(T+M)*B
 	MAT[4,4] = 1 - pars["eps"]*T - pars["betat"]*(T+M)*B
 
-	return(list(eq=c(R,B,M,T),MAT=MAT, ev = ev))
+	return(list(eq=c(R,B,M,T),MAT=MAT))
 
 }
 
@@ -123,7 +123,7 @@ get_matrix = function(ENV1, ENV2, params, int) {
 # RUN THE MODEL TO EQUILIBRIUM
 #################################
 
-params = read.table("pars.txt",row.names=1)
-pars = get_pars(ENV1 = 0,ENV2 = 0,params,int = 5)
-transition_matrix = get_matrix(ENV1 = 0,ENV2 = 0,pars,int = 5)
+params = read.table("pars.txt", row.names = 1)
+pars = get_pars(ENV1 = 0, ENV2 = 0, params, int = 3)
+transition_matrix = get_matrix(ENV1 = 0, ENV2 = 0, params, int = 3)
 eq = get_eq(pars)
