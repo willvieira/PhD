@@ -75,49 +75,55 @@ get_pars = function(ENV1, ENV2, params, int) {
 # COLLECT THE TRANSITION MATRIX
 #################################
 
-get_matrix = function(ENV1, ENV2, params, int) {
+	get_matrix = function(ENV1, ENV2, params, int) {
 
-	pars = get_pars(ENV1,ENV2,params,int)
-	eq = get_eq(pars)[[1]]
+		pars = get_pars(ENV1,ENV2,params,int)
+		eq = get_eq(pars)[[1]]
 
-	MAT = matrix(nr = 4, nc = 4)
+		MAT = matrix(nr = 4, nc = 4)
 
-	B = eq[1]
-	T = eq[2]
-	M = eq[3]
-	R = 1- B - M - T
+		B = eq[1]
+		T = eq[2]
+		M = eq[3]
+		R = - B - M - T
+		names(R) <- "R" #Renaming R because it would get "B" name instanted
 
-	pB = pars["alphab"]*(B+M)
-	pT = pars["alphat"]*(T+M)
-	pM = pB*pT
-	pB_ = pB*(1-pT)
-	pT_ = pT*(1-pB)
+		pB = pars["alphab"]*(B+M)
+		pT = pars["alphat"]*(T+M)
+		pM = pB*pT
+		pB_ = pB*(1-pT)
+		pT_ = pT*(1-pB)
 
-	# ORDER IN THE MATRIX: R, B, M, T
+		# ORDER IN THE MATRIX: R, B, M, T
 
-	MAT[1,1] = 1-(pB_*R + pM*R + pT_*R)
-	MAT[1,2] = pB_*R
-	MAT[1,3] = pM*R
-	MAT[1,4] = pT_*R
+		MAT[1,1] = 1-(pB_*R + pM*R + pT_*R)
+		MAT[1,2] = pB_*R
+		MAT[1,3] = pM*R
+		MAT[1,4] = pT_*R
 
-	MAT[2,1] = pars["eps"]*B
-	MAT[2,2] = 1 - pars["eps"]*B - pars["betab"]*(B+M)*T
-	MAT[2,3] = pars["betab"]*(B+M)*T
-	MAT[2,4] = 0
+		MAT[2,1] = pars["eps"]*B
+		MAT[2,2] = 1 - pars["eps"]*B - pars["betab"]*(B+M)*T
+		MAT[2,3] = pars["betab"]*(B+M)*T
+		MAT[2,4] = 0
 
-	MAT[3,1] = pars["eps"]*M
-	MAT[3,2] = pars["theta"]*(1-pars["thetat"])*M
-	MAT[3,3] = 1 - pars["eps"]*M - pars["theta"]*M
-	MAT[3,4] = pars["theta"]*(pars["thetat"])*M
+		MAT[3,1] = pars["eps"]*M
+		MAT[3,2] = pars["theta"]*(1-pars["thetat"])*M
+		MAT[3,3] = 1 - pars["eps"]*M - pars["theta"]*M
+		MAT[3,4] = pars["theta"]*(pars["thetat"])*M
 
-	MAT[4,1] = pars["eps"]*T
-	MAT[4,2] = 0
-	MAT[4,3] = pars["betat"]*(T+M)*B
-	MAT[4,4] = 1 - pars["eps"]*T - pars["betat"]*(T+M)*B
+		MAT[4,1] = pars["eps"]*T
+		MAT[4,2] = 0
+		MAT[4,3] = pars["betat"]*(T+M)*B
+		MAT[4,4] = 1 - pars["eps"]*T - pars["betat"]*(T+M)*B
 
-	return(list(eq=c(R,B,M,T),MAT=MAT))
+		# Rename Matrix col and row
+		nm <- c("R", "B", "M", "T")
+		rownames(MAT) <- nm
+		colnames(MAT) <- nm
 
-}
+		return(list(eq=c(R,B,M,T),MAT=MAT))
+
+	}
 
 #################################
 # RUN THE MODEL TO EQUILIBRIUM
