@@ -133,3 +133,52 @@ params = read.table("pars.txt", row.names = 1)
 pars = get_pars(ENV1 = 0, ENV2 = 0, params, int = 3)
 transition_matrix = get_matrix(ENV1 = 0, ENV2 = 0, params, int = 3)
 eq = get_eq(pars)
+
+#################################
+# MODEL BEHAVIOR
+#################################
+
+#First try (weird result)
+#data frame
+dm <- data.frame(matrix(NA, nrow = 200, ncol = 4))
+
+#Initial condition
+y = c(B = 0.25, T = 0.25, M = 0.25)
+
+#loop
+for(i in 1:200) {
+  prop <- model(y = y, params = pars)
+  prop <- as.vector(prop[[1]])
+  prop[4] <- 1 - prop[1] - prop[2] - prop[3]
+  dm[i, ] <- prop
+  y <- dm[i, c(1, 2, 3)]
+  names(y) <- c("B", "T", "M")
+}
+
+#plot
+time <- c(1:200)
+plot(time, dm[, 1], type = "l", ylim = c(0, max(dm)))
+lines(dm[, 2])
+lines(dm[, 3])
+lines(dm[, 4])
+
+#Second try
+#data frame
+dm2 <- data.frame(matrix(NA, nrow = 200, ncol = 4))
+
+#Initial condition
+y = c(B = 0.25, T = 0.25, M = 0.25)
+dm2[1, ] = c(y, 0.25)
+#loop
+for(i in 2:200) {
+  eq = runsteady(y = y, func = model, parms = pars, times = c(0, i))[[1]]
+  eq[4] <- 1 - eq[1] - eq[2] - eq[3]
+  dm2[i, ] <- eq
+}
+
+#plot
+time <- c(1:200)
+plot(time, dm2[, 1], type = "l", ylim = c(0, max(dm2)), col = 2)
+lines(dm2[, 2], col = 3)
+lines(dm2[, 3], col = 4)
+lines(dm2[, 4], col = 5)
