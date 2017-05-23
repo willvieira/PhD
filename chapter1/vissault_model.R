@@ -25,12 +25,14 @@ model = function(t, y, params) {
 #################################
 # Local stability
 #################################
-get_eq = function(params) {
+get_eq = function(params, y = NULL) {
 
 	library(rootSolve)
 
 	# Initial conditions
-	y = c(B = 0.25, T = 0.25, M = 0.25)
+	if(is.null(y)) {
+		y = c(B = 0.25, T = 0.25, M = 0.25)
+	}else(y = y)
 
 	# Get the equilibrium
 	eq = runsteady(y = y, func = model, parms = params, times = c(0, 1000))[[1]]
@@ -153,7 +155,43 @@ for(i in 2:length(time)) {
 }
 
 #plot
-plot(time, dm2[, 1], type = "l", ylim = c(0, max(dm2)), col = 2)
+plot(time, dm2[, 1], type = "l", ylim = c(0, max(dm2)), col = 2, ylab = "State proportion")
 lines(dm2[, 2], col = 3)
 lines(dm2[, 3], col = 4)
 lines(dm2[, 4], col = 5)
+
+#################################
+# ADD DISTURBANCE
+#################################
+
+#data frame with two environmnetal conditions
+behavior <- function(envComb1, envComb2) {
+	time <- seq(1, 40, by = 1)
+	dat <- data.frame(matrix(NA, nrow = length(time), ncol = 6))
+	names(dat) <- c("ENV1", "ENV2", "B", "T", "M", "R")
+	dat[c(1:20), c(1,2)] <- envComb1 #environmnetal 1
+	dat[c(21: dim(dat)[1]), c(1,2)] <- envComb2 #environmnetal 2
+
+	#initial condition
+	dat[1, c(3:6)] = c(B = 0.25, T = 0.25, M = 0.25, R = 0.25)
+
+	#behavior
+	for(i in 2:length(time)) {
+		pars = get_pars(ENV1 = dat[i, 1],ENV2 = dat[i, 2], params, int = 3)
+		y = c(B = dat[(i - 1), 3], T = dat[(i - 1), 4], M = dat[(i - 1), 5])
+		eq = runsteady(y = y, func = model, parms = pars, times = c(0, i))[[1]]
+	  eq[4] <- 1 - eq[1] - eq[2] - eq[3]
+	  dat[i, c(3:6)] <- eq
+	}
+
+plot(0, xlim = c(0, length(time)), ylim = c(0, 1), type = 'l', col = 1)
+legend('topleft', c("B", "T", "M", "R"), col = 1:4, lty = 1)
+
+return(dat)
+}
+
+dat <- behavior(envComb1 = c(-.25, -.25), envComb2= c(0.25, 0.25))
+lines(dat$B, col = 1)
+lines(dat$T, col = 2)
+lines(dat$M, col = 3)
+lines(dat$R, col = 4)
