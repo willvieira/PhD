@@ -184,10 +184,10 @@ behavior <- function(envComb1, envComb2) {
 	  dat[i, c(3:6)] <- eq
 	}
 
-plot(0, xlim = c(0, length(time)), ylim = c(0, 1), type = 'l', col = 1)
-legend('topleft', c("B", "T", "M", "R"), col = 1:4, lty = 1)
+	plot(0, xlim = c(0, length(time)), ylim = c(0, 1), type = 'l', col = 1)
+	legend('topleft', c("B", "T", "M", "R"), col = 1:4, lty = 1)
 
-return(dat)
+	return(dat)
 }
 
 dat <- behavior(envComb1 = c(-.25, -.25), envComb2= c(0.25, 0.25))
