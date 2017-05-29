@@ -1,0 +1,38 @@
+#Plot "climate change" tendence from google scholar
+
+#source
+source("/Users/wvieira/Documents/GitHub/NativeFunctions/MyScatterPlot.R")
+
+#data
+sch <- read.table("/Users/wvieira/Documents/GitHub/PhD/litRev/data/scholar_dat.txt", head = T)
+isi <- read.table("/Users/wvieira/Documents/GitHub/PhD/litRev/data/ISI_dat.txt", head = T)
+
+#Plot
+myplot(x = sch$year,
+       y = log(sch$results),
+       xlim =c(1940, 2015),
+       ylim = c(1, 13.5),
+       xlab = "time (year)",
+       ylab = "frequency (log)",
+       type = "l",
+       main = "Climate change trends",
+       newWindow = TRUE,
+       width = 5,
+       height = 4.5
+)
+lines(isi$year, log(isi$results), lty = 2)
+legend("topleft", legend=c("Scholar", "ISI"), lty = 1: 2, cex = 0.95, bty = "n")
+
+#export
+pdf("/Users/wvieira/Documents/GitHub/PhD/litRev/img/fig1.pdf", width = 5, height = 4.5)
+myplot(x = sch$year,
+       y = log(sch$results),
+       xlim =c(1940, 2015),
+       ylim = c(1, 13.5),
+       xlab = "time (year)",
+       ylab = "frequency (log)",
+       type = "l")
+lines(isi$year, log(isi$results), lty = 2)
+legend("topleft", legend=c("Scholar", "ISI"), lty = 1: 2, cex = 0.95, bty = "n")
+mtext(3, "climate change")
+dev.off()
