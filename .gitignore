@@ -1,6 +1,10 @@
 
 # Created by https://www.gitignore.io/api/c,r,c++,latex
 
+### Mac files ###
+.DS_Store
+*.DS_Store
+
 ### C ###
 # Prerequisites
 *.d
