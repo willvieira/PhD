@@ -1,6 +1,43 @@
 % Literature review for the first meeting
 
-\input{firstPage.tex}
+\input{config.tex}
+
+\title{
+  PhD project \\
+  Linking forest management and species distribution models: \\
+  a theoretical approach under climate change
+}
+
+\author[1,*]{Willian Vieira}
+\affil[1]{Département de Biologie, Université de Sherbrooke, Sherbrooke, Québec, Canada}
+\affil[*]{w.vieiraw@gmail.com}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+
+Abstract section
+
+\end{abstract}
+
+\thispagestyle{empty} %no page number in the first page
+
+%logo
+\vfill
+\begin{figure}
+\centering\includegraphics[width=16cm]{img/logo.pdf}
+\end{figure}
+
+\clearpage
+
+\thispagestyle{empty} %no page number in the first page
+
+\tableofcontents
+
+\clearpage
 
 \begin{displayquote}
 \centering\textit{Ecology may provide many of the answers — but only if it is holistic enough to incorporate the human element as part and parcel of the ecosystem.} \\ \RaggedLeft{\citep[p. 231]{Pfister1993}}
@@ -15,7 +52,7 @@ This global change has an impact in different biological processes, from local s
 \begin{wrapfigure}{r}{0.38\textwidth}
     \centering
     \includegraphics[width=0.38\textwidth]{img/fig1_em.pdf}
-    \caption{Frequency of the keyword ``Climate change'' used in references indexed on Google Scholar (1940 - 2013) and Web of Science (1994 - 2015)}
+    \caption{Frequency of the keyword ``Climate change'' used in publication indexed on Google Scholar (1940 - 2013) and Web of Science (1994 - 2015)}
     \label{fig:fig1}
 \end{wrapfigure}
 
@@ -27,7 +64,8 @@ Considering this ecological constraints, trees' migration rate following climate
 %Extinction debt is following climate debt?
 The climatic debt is a measure of the lag (or disequilibrium) of plant communities with climate change, integrated in an environmental context \citep{Bertrand2016}.
 \citet{Essl2015} has listed twelve mechanisms that contribute to delayed biodiversity responses, among them, changes appears at ecosystem (loss and degradation), community (secessional, biotic interaction, species removal and invasion) and population (evolutionary and adaptive) levels.
-Disturbance regime was also listed but it may not by related to climate debt \citep{Bertrand2016}.
+Abiotic changes cause biotic changes that directly and indirectly promotes species' persistence and species' migration \citep{Bertrand2016}.
+This mechanisms of persistence (measured by resistance) and migration (measured by recovery) leads to a climate debt and migration credit, respectively \citep{Bertrand2016} but also a concept of resilience \citep[see section \ref{res}]{Oliver2015}.
 Therefore, this lag under climate change promotes extinction debt, being a challenging for biodiversity conservation \citep{Kuussaari2009} and productivity \citep{Lasch2002}.
 Identify the mechanisms shaping delayed biotic response of systems to environment, its resilience as well as alternatives to mitigate ecological constraints, is crucial to access the vulnerability of biodiversity to climate change and improve forecasts and biodiversity management \citep{Essl2015,Oliver2015,Bertrand2016}.
 
@@ -40,25 +78,36 @@ To achieve, I will use theoretical models parameterized from a forest inventory 
 As an outcome, I will create a decision make tool to improve management strategies that take climate change into account.
 
 My PhD is based in three questions so far: \\
-(i) Which mechanisms are affecting the delayed biotic response to climate change? What is the origin, direction and intensity of these mechanisms? \\
+(i) Which mechanisms are affecting the delayed biotic response to climate change? What is the origin, direction, intensity and interaction of these mechanisms? \\
 (ii) How can forest management affect these mechanisms to speed up the response? \\
 (iii) How can these mechanisms be used to inform applied management to enhance the resilience and productivity?
 
 \section{Mitigating ecological constraints}
 
-Ecological constraints, together with abiotic and biotic mechanisms, act at different scales, being difficult to track and hence to mitigate.
-To start, our work aims to identify how we can increase forest resilience, or more specific, how to decrease the time needed to recover from a disturbance (theories described in section \ref{ta}).
-Here, I present some mechanisms that could be affecting the delayed response to climate change, as well as possible topics I will be testing through my thesis using SDM, acting both at local and large scale.
+Ecological constraints act by different biotic and abiotic mechanisms at all scales, being difficult to track and therefore to mitigate.
+To start, our work aims to identify how we can increase forest resilience, or more specific, how to decrease the recovery time of a system from a disturbance to a steady state (theories described in section \ref{ta}).
+Here, I present some mechanisms that may be affecting the delayed response to climate change, as well as increase forest resilience, in which may become possible topics I will be testing during my thesis using SDM, acting both at local and large scale.
 
 \subsection{Biotic Mechanisms}
+Species with a high intrinsic rate of increase will recover more quickly from environmental perturbations (Mechanisms contributing to stability in ecosystem function depend on the environmental context. Ecol. Lett.)
+
+\textbf{Species interaction}
+Explain the role species interaction can play on its distribution range. \\
+http://www.sciencedirect.com/science/article/pii/S0169534715002475
+The perceived threat of climate change is often evaluated from species distribution models that are fitted to many species independently and then added together. This approach ignores the fact that species are jointly distributed and limit one another \citep{clark2014}.
+
+Joint species distribution?
+
+Interactions between land-use and climate also can underestimate species resilience in distribution models \citep{Goring2017}.
 
 \subsection{Abiotic Mechanisms}
-
-\subsection{Species interaction}
 
 \subsection{Forest management}
 
 Present some motivations, advantages and disadvantages in considering forest management.
+
+It is clear that some factors will be more amenable to management (e.g., population-level genetic variability, landscape structure
+[18,31]) than others (e.g., environmental sensitivity of individual species, presence of alternative stable states). In Olivier 2015
 
 Four major strategies are available to mitigate carbon emissions through forestry activities: (i) to increase forested land area through reforestation (6), (ii) to increase the carbon density of existing forests at both stand and landscape scales, (iii) to expand the use of forest products that sustainably replace fossil-fuel CO2 emissions, and (iv) to reduce emissions from deforestation and degradation. in Managing forests for climate change mitigation (Science)
 
@@ -69,6 +118,9 @@ Interesting argument about who should peak do winners from \citet{Webster2017}. 
 
 Forest management in a theoretical view was actually not very much explored and so I consider it a kind of gap we should better explore. Read \citet{Becknell2015} for an overview.
 
+\subsection{Forest productivity}
+Robert m'a envoyé quelques articles qui discutent des facteurs qui contrôlent la dominance des arbustes éricacées en forêt boréale et de leur possible impacte sur la productivité forestière.
+
 \section{Theoretical approach}\label{ta}
 
 Read the section \textit{recent developments in predicting changes in species distribution} from \citet{Ehrlen2015}
@@ -76,14 +128,14 @@ Read the section \textit{recent developments in predicting changes in species di
 \subsection{Disturbance}
 Pass through the main disturbance theories basing mainly in \citet{Pulsford2016}
 
-\subsection{Resilience}
+\subsection{Resilience}\label{res}
 
 A classical definition of resilience in ecology is the ability of ecosystems to absorb changes and still persist \citep{Holling1973}.
 The concept was further developed in other context (e.g. social-ecological systems), and a more contemporary definition considers resilience as (i) the amount of disturbance the system can absorb, (ii) the degree the system is able to self-organize and (iii) the degree of learning capacity to adapt to disturbance \citep{Cumming2011}.
-In other words, resilience is basically external changes accommodated (or absorbed) that do not modify ecosystem structure \citep{Folke2002} or the resistance of a particular ecological state to change \citep{Peterson1998}.
-Resilience can be incrased by multiple factors as ...., but biodiversity shows to be crucial to maintain long-term resilience of ecosystem services \citep{Oliver2015}.
+In other words, resilience is the joint of two concepts, the time to recovery to stability and accommodated external changes \citep{pimm1984,Folke2002} and the resistance of a particular ecological state to change \citep{Peterson1998}.
+Resilience can be affected by different mechanisms from species to landscape levels, but biodiversity shows to be crucial to maintain long-term resilience of ecosystem services \citep{Oliver2015}.
 
-It is also important to not confuse resilience with stability of a system. Resilience is the rate and extent of recovery of a system while stability is the moment the system stops to change over time. Before introduce the method to calculate resilience, we must have an idea of what is the equilibrium (\hyperlink{box1}{Box 1}) and stability (\hyperlink{box2}{Box 2}) of a system.
+It is also important to not confuse resilience with stability of a system. Resilience is the rate and extent of recovery of a system while stability is when the system maintains stable following small perturbations over time. Before introduce the method to calculate resilience, we must have an idea of what is the equilibrium (\hyperlink{box1}{Box 1}) and stability (\hyperlink{box2}{Box 2}) of a system.
 
 \textbf{(iii)} But how to calculate it in a analytical way?  Now introduce the calculus of $\lambda$ by Jacobian matrix.
 
@@ -101,22 +153,15 @@ E &= mc^2 & \text{Formula of the universe}
 \end{align}
 \end{tcolorbox}
 
+\subsection{Transition period - Alternative Stable States?}
+
+\subsection{Early warnings?}
+
 \subsection{Range dynamics theory}
 
 What theories can help us to describe species range under climate change?\\
 How to integrate forest management in this theory?\\
 -> Matapopulation dynamics theory <-
-
-\subsection{Transition period - Alternative Stable States?}
-
-\subsection{Species Interaction: why is it important?}
-Explain the role species interaction can play on its distribution range. \\
-http://www.sciencedirect.com/science/article/pii/S0169534715002475
-The perceived threat of climate change is often evaluated from species distribution models that are fitted to many species independently and then added together. This approach ignores the fact that species are jointly distributed and limit one another \citep{clark2014}.
-
-Joint species distribution?
-
-Interactions between land-use and climate also can underestimate species resilience in distribution models \citep{Goring2017}.
 
 \section{Study case: the Quebec forest resource}
 
