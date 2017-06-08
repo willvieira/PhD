@@ -4,6 +4,7 @@
 
 \title{
   PhD project \\
+  \bigskip
   Linking forest management and species distribution models: \\
   a theoretical approach under climate change
 }
@@ -23,21 +24,22 @@ Abstract section
 
 \end{abstract}
 
-\thispagestyle{empty} %no page number in the first page
+\linenumbers
+\modulolinenumbers[1]
 
 %logo
 \vfill
 \begin{figure}
 \centering\includegraphics[width=16cm]{img/logo.pdf}
 \end{figure}
-
-\clearpage
-
 \thispagestyle{empty} %no page number in the first page
-
-\tableofcontents
-
 \clearpage
+
+\thispagestyle{empty}
+\tableofcontents
+\clearpage
+
+% START DOCUMENT
 
 \begin{displayquote}
 \centering\textit{Ecology may provide many of the answers — but only if it is holistic enough to incorporate the human element as part and parcel of the ecosystem.} \\ \RaggedLeft{\citep[p. 231]{Pfister1993}}
@@ -104,7 +106,8 @@ Interactions between land-use and climate also can underestimate species resilie
 
 \subsection{Forest management}
 
-Present some motivations, advantages and disadvantages in considering forest management.
+Lessons from large-scale environmental management successes, for example measures to reduce the causes of ‘acid rain’ (Fowler et al. 1982), show that action at local and global scales must complement each other if wide-scale environmental management efforts are to be successful.
+Present some motivations, advantages and disadvantages in considering forest management. (in Rhodes 2015)
 
 It is clear that some factors will be more amenable to management (e.g., population-level genetic variability, landscape structure
 [18,31]) than others (e.g., environmental sensitivity of individual species, presence of alternative stable states). In Olivier 2015
@@ -119,6 +122,13 @@ Interesting argument about who should peak do winners from \citet{Webster2017}. 
 Forest management in a theoretical view was actually not very much explored and so I consider it a kind of gap we should better explore. Read \citet{Becknell2015} for an overview.
 
 paper:Temporal stability in forest productivity increases with tree diversity due to asynchrony in species dynamics
+
+However, this translation is limited by significant knowledge gaps including the following: (i) difficulties in detecting changes in resilience (Batt et al. 2013), (ii) a lack of evidence and agreement to support successful preventative management actions (Barrett et al. 2014) and (iii) the need to work across multiple geopolitical scales to achieve effective management (Servos et al. 2013). (In Rhodes 2015 at app eco)
+
+\textbf{An operational model for resilience-based management}
+Step 1: Detecting ecological sensitivity to pressures
+Step 2: Developing more effective resilience-based management measures
+Step 3: Achieving adaptive governance
 
 \subsection{Forest productivity}
 Robert m'a envoyé quelques articles qui discutent des facteurs qui contrôlent la dominance des arbustes éricacées en forêt boréale et de leur possible impacte sur la productivité forestière.
@@ -138,11 +148,9 @@ We have therefore two concepts, the time to \textbf{recovery} to stability and a
 Although \citet{Oliver2015} treat both resistance and recovery as related aspects of resilience, I prefer to keep these concepts separated in (i) recovery resilience (or engineering resilience) and (ii) resistance where both are englobed in ecological resilience \citep{Hodgson2015,Nimmo2015}.
 Ecological resilience can be affected by different mechanisms from species to landscape levels, but biodiversity shows to be crucial to maintain long-term resilience of ecosystem services \citep{Oliver2015}.
 
-It is also important to not confuse recovery resilience with stability of a system. Recovery resilience is the rate and extent of recovery of a system while stability is when the system maintains stable following small perturbations over time. Before introduce the method to calculate resilience, we must know what is the equilibrium (\hyperlink{box1}{Box 1}) and stability (\hyperlink{box2}{Box 2}) of a system, as well as these measures are relative and careful must be taken when choosing \textit{resilience of what to what} \citep{Carpenter2001}.
-
-\textbf{(iii)} But how to calculate it in a analytical way?
-To implement the results from these or other studies in management projects, it is necessary to disentangle the many meanings and measures of resilience and related stability concepts (In Mori at TREE).
-Now introduce the calculus of $\lambda$ by Jacobian matrix.
+It is also important to not confuse recovery resilience with stability of a system.
+Recovery resilience is the rate and extent of ``restoration'' of a system while stability is when the system maintains stable following small perturbations over time.
+Before introduce the method to calculate recovery resilience, we must know what is the equilibrium (\hyperlink{box1}{Box 1}) and stability (\hyperlink{box2}{Box 2}) of a system, as well as these measures are relative and careful must be taken when choosing \textit{resilience of what to what} \citep{Carpenter2001}.
 
 \begin{tcolorbox}
 \hypertarget{box1}{Box 1}. Equilibrium
@@ -157,6 +165,11 @@ E &= mc^2 & \text{Formula of the universe}
 E &= mc^2 & \text{Formula of the universe}
 \end{align}
 \end{tcolorbox}
+
+\textbf{(iii)} But how to calculate it in a analytical way?
+To implement the results from these or other studies in management projects, it is necessary to disentangle the many meanings and measures of resilience and related stability concepts (In Mori at TREE).
+Now introduce the calculus of $\lambda$ by Jacobian matrix.
+The Jacobian matrix has been used in different applications, from local models [...] to meta-ecosystems models \citep{Gravel2016}
 
 \subsection{Transition period - Alternative Stable States?}
 The existence of single equilibria is still often assumed in the literature, with critical implications for conservation and restoration. -- An important feature of this concept (resilience) is the emphasis on possible alternative system properties that are associated with renewal and reorganization after disturbance (In Mori 2016 at TREE)

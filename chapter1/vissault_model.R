@@ -195,3 +195,66 @@ lines(dat$B, col = 1)
 lines(dat$T, col = 2)
 lines(dat$M, col = 3)
 lines(dat$R, col = 4)
+
+#################################
+# Effect of parameters variation on Eigenvalue
+#################################
+
+#Setting parameters variation (Really ugly)
+nn <- 5
+By <- 0.5
+int <- 2
+ab <- seq(from = params[1,], to = params[1,] + nn, By); ab <- 1-(1-logit_reverse(ab))^int
+at <- seq(from = params[8,], to = params[8,] + nn, By); at <- 1-(1-logit_reverse(at))^int
+bb <- seq(from = params[15,], to = params[15,] + nn, By); bb <- 1-(1-logit_reverse(bb))^int
+bt <- seq(from = params[22,], to = params[22,] + nn, By); bt <- 1-(1-logit_reverse(bt))^int
+th <- seq(from = params[36,], to = params[36,] + nn, By); th <- 1-(1-logit_reverse(th))^int
+tt <- seq(from = params[29,], to = params[29,] + nn, By); tt <- 1-(1-logit_reverse(tt))^int
+e <- seq(from = params[43,], to = params[43,] + nn, By); e <- 1-(1-logit_reverse(e))^int
+par.var1 <- list(ab, at, bb, bt, th, tt, e)
+
+#running eigenvalue to each parameter
+pars = get_pars(ENV1 = 0, ENV2 = 0, params, int = int)
+eql <- as.list("NA")
+df <- data.frame()
+for(k in 1: length(pars)) {
+	pars = get_pars(ENV1 = 0, ENV2 = 0, params, int = int)
+	for(j in 1: length(ab)) {
+		pars[k] = par.var1[[k]][j]
+		df[j, 1]	<- par.var1[[k]][j]
+		df[j, 2] <- get_eq(pars)$ev
+	}
+eql[[k]] <- df
+}
+
+#plot
+par(mfrow = c(3,3), mar = c(2, 2, 1, 1))
+for(i in 1:7) {
+	plot(eql[[i]], xlab = "", ylab = "")
+	abline(lm(eql[[i]]$V2~ eql[[i]]$V1))
+}
+
+#Fixing parameter variation
+fix <- seq(0, 1, 0.1)
+par.var1 <- list(fix, fix, fix, fix, fix, fix, fix)
+
+#running eigenvalue to each parameter
+pars = get_pars(ENV1 = 0, ENV2 = 0, params, int = int)
+eql <- as.list("NA")
+df <- data.frame()
+for(k in 1: length(pars)) {
+	pars = get_pars(ENV1 = 0, ENV2 = 0, params, int = int)
+	for(j in 1: length(ab)) {
+		pars[k] = par.var1[[k]][j]
+		df[j, 1]	<- par.var1[[k]][j]
+		df[j, 2] <- get_eq(pars)$ev
+	}
+eql[[k]] <- df
+}
+
+#plot
+par(mfrow = c(3,3), mar = c(2, 2, 1, 1))
+for(i in 1:7) {
+	plot(eql[[i]], xlab = "", ylab = "")
+	abline(lm(eql[[i]]$V2~ eql[[i]]$V1))
+}
