@@ -230,12 +230,12 @@ eql[[k]] <- df
 #plot
 par(mfrow = c(3,3), mar = c(2, 2, 1, 1))
 for(i in 1:7) {
-	plot(eql[[i]], xlab = "", ylab = "")
-	abline(lm(eql[[i]]$V2~ eql[[i]]$V1))
+	plot(eql[[i]], type = "l", xlab = "", ylab = "")
+	points(eql[[i]])
 }
 
 #Fixing parameter variation
-fix <- seq(0, 1, 0.1)
+fix <- seq(0, 1.7, 0.1)
 par.var1 <- list(fix, fix, fix, fix, fix, fix, fix)
 
 #running eigenvalue to each parameter
@@ -244,7 +244,7 @@ eql <- as.list("NA")
 df <- data.frame()
 for(k in 1: length(pars)) {
 	pars = get_pars(ENV1 = 0, ENV2 = 0, params, int = int)
-	for(j in 1: length(ab)) {
+	for(j in 1: length(fix)) {
 		pars[k] = par.var1[[k]][j]
 		df[j, 1]	<- par.var1[[k]][j]
 		df[j, 2] <- get_eq(pars)$ev
@@ -255,6 +255,6 @@ eql[[k]] <- df
 #plot
 par(mfrow = c(3,3), mar = c(2, 2, 1, 1))
 for(i in 1:7) {
-	plot(eql[[i]], xlab = "", ylab = "")
-	abline(lm(eql[[i]]$V2~ eql[[i]]$V1))
+	plot(eql[[i]], type = "l", xlab = "", ylab = "")
+	points(eql[[i]])
 }
