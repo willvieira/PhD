@@ -35,13 +35,13 @@ get_eq = function(params, y = NULL) {
 	}else(y = y)
 
 	# Get the equilibrium
-	eq = runsteady(y = y, func = model, parms = params, times = c(0, 1000))[[1]]
+	eq = runsteady(y = y, func = model, parms = pars, times = c(0, 1000))[[1]]
 
 	# Compute the Jacobian
-	J = jacobian.full(y = eq, func = model, parms = params)
+	J = jacobian.full(y = eq, func = model, parms = pars)
 
 	# Stability
-	ev = max(eigen(J)$values)
+	ev = max(Re(eigen(J)$values)) #in case of complex eigenvalue, using Re to get the first real part
 
 	return(list(eq = eq, ev = ev))
 }
@@ -200,6 +200,7 @@ lines(dat$R, col = 4)
 # Effect of parameters variation on Eigenvalue
 #################################
 
+#TEST 1: original value parameters + 5
 #Setting parameters variation (Really ugly)
 nn <- 5
 By <- 0.5
@@ -234,9 +235,9 @@ for(i in 1:7) {
 	points(eql[[i]])
 }
 
-#Fixing parameter variation
-fix <- seq(0, 1.7, 0.1)
-par.var1 <- list(fix, fix, fix, fix, fix, fix, fix)
+#TEST 2: Fixed value for main parameters from 0 to 1.7 and original value for the other parameters
+int <- 2
+Fix <- seq(0, 1.7, 0.1)
 
 #running eigenvalue to each parameter
 pars = get_pars(ENV1 = 0, ENV2 = 0, params, int = int)
@@ -244,9 +245,36 @@ eql <- as.list("NA")
 df <- data.frame()
 for(k in 1: length(pars)) {
 	pars = get_pars(ENV1 = 0, ENV2 = 0, params, int = int)
-	for(j in 1: length(fix)) {
-		pars[k] = par.var1[[k]][j]
-		df[j, 1]	<- par.var1[[k]][j]
+	for(j in 1: length(Fix)) {
+		pars[k] = Fix[j]
+		df[j, 1]	<- Fix[j]
+		df[j, 2] <- get_eq(pars)$ev
+	}
+eql[[k]] <- df
+}
+
+#plot
+par(mfrow = c(3,3), mar = c(2, 2, 1, 1))
+for(i in 1:7) {
+	plot(eql[[i]], type = "l", xlab = "", ylab = "")
+	points(eql[[i]])
+}
+
+#TEST 3: Fixed value for all parameters from 0 to 1.7
+int <- 2
+Fix <- seq(0, 1.7, 0.1)
+exPar <- 0.8 #fixed value of all other parameters
+
+#running eigenvalue to each parameter
+pars = get_pars(ENV1 = 0, ENV2 = 0, params, int = int)
+eql <- as.list("NA")
+df <- data.frame()
+for(k in 1: length(pars)) {
+	pars = get_pars(ENV1 = 0, ENV2 = 0, params, int = int)
+	pars[-k] <- exPar
+	for(j in 1: length(Fix)) {
+		pars[k] = Fix[j]
+		df[j, 1]	<- Fix[j]
 		df[j, 2] <- get_eq(pars)$ev
 	}
 eql[[k]] <- df
