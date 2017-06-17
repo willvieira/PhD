@@ -35,10 +35,10 @@ get_eq = function(params, y = NULL) {
 	}else(y = y)
 
 	# Get the equilibrium
-	eq = runsteady(y = y, func = model, parms = pars, times = c(0, 1000))[[1]]
+	eq = runsteady(y = y, func = model, parms = params, times = c(0, 1000))[[1]]
 
 	# Compute the Jacobian
-	J = jacobian.full(y = eq, func = model, parms = pars)
+	J = jacobian.full(y = eq, func = model, parms = params)
 
 	# Stability
 	ev = max(Re(eigen(J)$values)) #in case of complex eigenvalue, using Re to get the first real part
@@ -231,7 +231,7 @@ eql[[k]] <- df
 #plot
 par(mfrow = c(3,3), mar = c(2, 2, 1, 1))
 for(i in 1:7) {
-	plot(eql[[i]], type = "l", xlab = "", ylab = "")
+	plot(eql[[i]], type = "l", xlab = "", ylab = "", ylim = c(-.32,-.02))
 	points(eql[[i]])
 }
 
@@ -256,14 +256,14 @@ eql[[k]] <- df
 #plot
 par(mfrow = c(3,3), mar = c(2, 2, 1, 1))
 for(i in 1:7) {
-	plot(eql[[i]], type = "l", xlab = "", ylab = "")
+	plot(eql[[i]], type = "l", xlab = "", ylab = "", ylim = c(-.35,0))
 	points(eql[[i]])
 }
 
 #TEST 3: Fixed value for all parameters from 0 to 1.7
 int <- 2
 Fix <- seq(0, 1.7, 0.1)
-exPar <- 0.8 #fixed value of all other parameters
+exPar <- 0.2 #fixed value of all other parameters
 
 #running eigenvalue to each parameter
 pars = get_pars(ENV1 = 0, ENV2 = 0, params, int = int)
@@ -283,6 +283,6 @@ eql[[k]] <- df
 #plot
 par(mfrow = c(3,3), mar = c(2, 2, 1, 1))
 for(i in 1:7) {
-	plot(eql[[i]], type = "l", xlab = "", ylab = "")
+	plot(eql[[i]], type = "l", xlab = "", ylab = "", ylim = c(-.5,0))
 	points(eql[[i]])
 }
