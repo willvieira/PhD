@@ -1,6 +1,6 @@
 % Literature review for the first meeting
 
-\input{config.tex}
+\input{texConf/config.tex}
 
 \title{
   PhD project \\
@@ -21,9 +21,9 @@
 \begin{abstract}
 
 \textbf{TODO}: \\
-- Abiotic and biotic constraints \\
+- Abiotic constraints \\
 - Forest management and productivity \\
-- Theoretical approach (SDM, Disturbance, resilience calculus, alternative stable state and early warning signals) \\
+- Theoretical approach (SDM, resilience calculus, alternative stable state and early warning signals) \\
 - All study case: Québec Forest ressource \\
 - All methods \\
 - Better description of thesis structure \\
@@ -48,14 +48,14 @@
 % START DOCUMENT
 
 \begin{displayquote}
-\centering\textit{Ecology may provide many of the answers — but only if it is holistic enough to incorporate the human element as part and parcel of the ecosystem.} \\ \RaggedLeft{\citep[p. 231]{Pfister1993}}
+\centering\textit{Ecology may provide many of the answers — but only if it is holistic enough to incorporate the human element as part and parcel of the ecosystem.} \\ \RaggedLeft{\parencite[p. 231]{Pfister1993}}
 \end{displayquote}
 
 \section{What is going on?}
 
-Climate change is an increasing trending topic both in non-scientific \citep{Capstick2015} and scientific environment (Figure \ref{fig:fig1}), transforming our world as a metamorphosis of practice and acting \citep{Beck2016}.
-According to IPCC \citep{Cubasch2013}, humans activities are contributing to increase the concentration of greenhouse gases, which can lead to increase the mean temperature and the strength of extreme climate events.
-This global change has an impact in different biological processes, from local species constraints \citep[e.g. low regeneration][]{Treyger2011}, shift in species' range \citep{Boisvert-Marsh2014,Monleon2015} and in community composition \citep{Dieleman2015} to range retractions and extinction \citep{Thomas2006}, impacting biodiversity at different scales \citep{Penuelas2013}.
+Climate change is an increasing trending topic both in non-scientific \parencite{Capstick2015} and scientific environment (Figure \ref{fig:fig1}), transforming our world as a metamorphosis of practice and acting \parencite{Beck2016}.
+According to IPCC \parencite{Cubasch2013}, humans activities are contributing to increase the concentration of greenhouse gases, which can lead to increase the mean temperature and the strength of extreme climate events.
+This global change has an impact in different biological processes, from local species constraints \parencite[e.g. low regeneration][]{Treyger2011}, shift in species' range \parencite{Boisvert-Marsh2014,Monleon2015} and in community composition \parencite{Dieleman2015} to range retractions and extinction \parencite{Thomas2006}, impacting biodiversity at different scales \parencite{Penuelas2013}.
 
 \begin{wrapfigure}{r}{0.38\textwidth}
     \centering
@@ -64,18 +64,26 @@ This global change has an impact in different biological processes, from local s
     \label{fig:fig1}
 \end{wrapfigure}
 
-Species distribution models (SDM; defined in section \ref{sdm}) is one of the most popular method to predict species' range shift under climate change, providing a wide range of applications, as in biodiversity conservation and management \citep{Guisan2005,Guisan2013}.
-However, these models are generally phenomenological and  distributed at equilibrium with climate \citep[e.g.][]{Pigot2013}, being an issue when species observation does not reflect its niche \citep{Schurr2012}.
-Furthermore, they do not consider important determinants of range limits as demography \citep{Louthan2015}, ecological constraints \citep{Wisz2013,Pigot2013} and species absences data \citep{Koshkina2017}, inducing non-accurately projection of the future spatial distribution of a species \citep{Tavecchia2016}.
-Considering this determinants, trees' migration rate following climate change will be slower than predicted \citep{Bertrand2011,Sittaro2017}, increasing the climatic debt \citep{Bertrand2016}.
+%Paragraph about the response of forest to climate change; finish with a link to SDM; Rewrite{Demographic and range dynamics of trees in the eastern United States and similar regions have likely already begun to respond to climate change. Some studies have detected evidence for higher mortality, lower regeneration, and/or range contraction at species’ lagging edges (Murphy et al., 2010; Zhu et al., 2012; Prasad, 2015), as well as northward migration (Woodall et al., 2009; Treyger & Nowak, 2011; Delzon et al., 2013; Bois- vert-Marsh et al., 2014; Monleon & Lintz, 2015) in Rogers et al. 2016.}
+
+Climate change has been impacting forest dynamics at different scales, where changes in the range distribution are expected.
+Vulnerability increases to climate change \parencite{Rogers2016}.
+Higher mortality \parencite{}, lower regeneration
+Some studies have detected evidence for higher mortality, lower regeneration, and/or range contraction at species’ lagging edges (Murphy et al., 2010; Zhu et al., 2012; Prasad, 2015), as well as northward migration (Woodall et al., 2009; Treyger and Nowak, 2011; Delzon et al., 2013; Bois- vert-Marsh et al., 2014; Monleon and Lintz, 2015).
+Climate variables are often used as predictors of trees site occupancy (Cnham and thomas 201) and range limits (Morin et al. 2007), in which, by modeling approach, range shift of hundreds of kilometers are projected under climate change (McKenney et al. 2011, Chambers et al. 2013, Berteaux et al. 2014, rie et al. 2014).)
+
+Species distribution models (SDM; defined in section \ref{sdm}) is one of the most popular method to predict species' range shift under climate change, providing a wide range of applications, as in biodiversity conservation and management \parencite{Guisan2005,Guisan2013}.
+However, these models are generally phenomenological and  distributed at equilibrium with climate \parencite[e.g.][]{Pigot2013}, being an issue when species observation does not reflect its niche \parencite{Schurr2012}.
+Furthermore, they do not consider important determinants of range limits as demography \parencite{Louthan2015}, ecological constraints \parencite{Wisz2013,Pigot2013} and species absences data \parencite{Koshkina2017}, inducing non-accurately projection of the future spatial distribution of a species \parencite{Tavecchia2016}.
+Considering this determinants, trees' migration rate following climate change will be slower than predicted \parencite{Bertrand2011,Sittaro2017}, increasing the climatic debt \parencite{Bertrand2016}.
 
 %Extinction debt is following climate debt?
-The climatic debt is a measure of the lag (or disequilibrium) of plant communities with climate change, integrated in an environmental context \citep{Bertrand2016}.
-\citet{Essl2015} has listed twelve mechanisms that contribute to delayed biodiversity responses, among them, changes appears at ecosystem (loss and degradation), community (secessional, biotic interaction, species removal and invasion) and population (evolutionary and adaptive) levels.
-Physical changes cause biotic changes that directly and indirectly promotes species' persistence and/or species' migration \citep{Bertrand2016}.
-This mechanisms of persistence (measured by resistance) and migration (measured by recovery) leads to a climate debt and migration credit, respectively \citep{Bertrand2016} but also a concept of resilience\footnotemark{} \citep{Oliver2015}.
-Therefore, this lag under climate change promotes extinction debt, being a challenging for biodiversity conservation \citep{Kuussaari2009} and productivity \citep{Lasch2002}.
-Identify the mechanisms shaping delayed biotic response of systems to environment, its resilience as well as alternatives to mitigate ecological constraints, is crucial to access the vulnerability of biodiversity to climate change and improve forecasts and biodiversity management \citep{Essl2015,Oliver2015,Bertrand2016}.
+The climatic debt is a measure of the lag (or disequilibrium) of plant communities with climate change, integrated in an environmental context \parencite{Bertrand2016}.
+\textcite{Essl2015} has listed twelve mechanisms that contribute to delayed biodiversity responses, among them, changes appears at ecosystem (loss and degradation), community (secessional, biotic interaction, species removal and invasion) and population (evolutionary and adaptive) levels.
+Physical changes cause biotic changes that directly and indirectly promotes species' persistence and/or species' migration \parencite{Bertrand2016}.
+This mechanisms of persistence (measured by resistance) and migration (measured by recovery) leads to a climate debt and migration credit, respectively \parencite{Bertrand2016} but also a concept of resilience\footnotemark{} \parencite{Oliver2015}.
+Therefore, this lag under climate change promotes extinction debt, being a challenging for biodiversity conservation \parencite{Kuussaari2009} and productivity \parencite{Lasch2002}.
+Identify the mechanisms shaping delayed biotic response of systems to environment, its resilience as well as alternatives to mitigate ecological constraints, is crucial to access the vulnerability of biodiversity to climate change and improve forecasts and biodiversity management \parencite{Essl2015,Oliver2015,Bertrand2016}.
 
 \footnotetext{Here I use \textbf{recovery resilience} (recovery time to equilibrium) and \textbf{resistance} to describe the whole mechanisms of ecological resilience (see why in section \ref{res})}
 
@@ -96,43 +104,67 @@ My PhD is based in four questions so far: \\
 \section{Mechanisms of delayed biotic response}
 
 Mechanisms shaping delayed biotic response and ecological resilience act at different scales and usually they interact with each other across scales, which makes the process sometime difficult to track and therefore to mitigate.
-Furthermore, there is a focus attention in mechanisms at the metapopulation level where local mechanisms are often ignored \citep{Hylander2013}; it creates a knowledge gap in understanding all the possibles mechanisms as well as its interactions.
+Furthermore, there is a focus attention in mechanisms at the metapopulation level where local mechanisms are often ignored \parencite{Hylander2013}; it creates a knowledge gap in understanding all the possibles mechanisms as well as its interactions.
 In this context, I will start my thesis trying to identify how we can increase forest resilience by managing these mechanisms, or more specific, how to decrease the recovery time of a system from a disturbance to a steady state (theories described in section \ref{ta}).
 Here, I present some mechanisms that may be affecting the delayed response to climate change, as well as forest resilience, in which may become possible topics I will be testing during my thesis using SDM approach, working both at local and large scale.
 
 \subsection{Biotic Mechanisms}
 
 Biotic mechanisms affect the delayed response from individual and population species to community level.
-At the individual scale, the lifecycle elements of a species \textit{j}, represented by demography patters, is a mechanism able to alter the time response from environmental perturbations \citep{Bertrand2016}.
-For example, species with a high growth rate will recover faster \citep{Grman2010}, in which we can expect a high recovery resilience; the allee effect can, however, induce the opposite effect by reducing mean vital rates \citep{Dennis2002}.
-In parallel, the sensitivity of a species also plays an important role in its response to perturbations \citep{Oliver2015,Bertrand2016}; sensitive species respond faster and also has a high recovery resilience.
+At the individual scale, the lifecycle elements of a species \textit{j}, represented by demography patters, is a mechanism able to alter the time response from environmental perturbations \parencite{Bertrand2016}.
+For example, species with a high growth rate will recover faster \parencite{Grman2010}, in which we can expect a high recovery resilience; the allee effect can, however, induce the opposite effect by reducing mean vital rates \parencite{Dennis2002}.
+In parallel, the sensitivity of a species also plays an important role in its response to perturbations \parencite{Oliver2015,Bertrand2016}; sensitive species respond faster and also has a high recovery resilience.
 In other hands, both species (with high growth and sensitivity) have a low resistance to environmental changes; it means that, if they have a low adaptive phenotypic plasticity, they will not be able to survive.
-Phenotypic plasticity is the (behaviour, morphology or physiology) change of an individual in response to the environmental change \citep{Price2003}; this adaptive process, together with evolutionary adaptation \citep{Bertrand2016} is a mechanism that increase both species resistance and recovery resilience \citep{Essl2015,Oliver2015}.
+Phenotypic plasticity is the (behaviour, morphology or physiology) change of an individual in response to the environmental change \parencite{Price2003}; this adaptive process, together with evolutionary adaptation \parencite{Bertrand2016} is a mechanism that increase both species resistance and recovery resilience \parencite{Essl2015,Oliver2015}.
 
-In a metapopulation level, high genetic variability increase both resistance and recovery resilience of species \citep{Hylander2013,Oliver2015}.
-Dispersal mechanisms can affect genetic variability (the low exchange between individuals, the low variability), in which together with the low dispersal ability of forest species, can lead to an increase in climate debt \citep{Hylander2013,Bertrand2016}.
-Further than dispersion, the effective population size also affect genetic variability \citep{Oliver2015}, where small populations increase the likelihood for inbreeding and hence the extinction risk \citep{Nieminen2001}.
-These individual and populational mechanisms are, however, rarely affecting species alone; instated there must be interactions between them \citep{Hylander2013}, as well as extra mechanisms acting from different scales and origins.
+In a metapopulation level, high genetic variability increase both resistance and recovery resilience of species \parencite{Hylander2013,Oliver2015}.
+Dispersal mechanisms can affect genetic variability (the low exchange between individuals, the low variability), in which together with the low dispersal ability of forest species, can lead to an increase in climate debt \parencite{Hylander2013,Bertrand2016}.
+Further than dispersion, the effective population size also affect genetic variability \parencite{Oliver2015}, where small populations increase the likelihood for inbreeding and hence the extinction risk \parencite{Nieminen2001}.
+These individual and populational mechanisms are, however, rarely affecting species alone; instated there must be interactions between them \parencite{Hylander2013}, as well as extra mechanisms acting from different scales and origins.
 
-Because different species are normally distributed together limiting one another \citep{clark2014}, consider biotic interactions across trophic levels is essential to predict species distribution \citep{VanderPutten2010}, as well as understand its impact on delayed biodiversity response \citep{Essl2015}.
-For example, trees competition for soil nitrogen has amplified climate debt, but it varies depending on the resource \citep{Bertrand2016}.
-Species interaction itself is determined by multiple mechanisms \citep[for an overview]{Louthan2015} and a shift from single-species distribution to community distribution is suggested \citep{Cazelles2016}.
-In a interaction network, the loss of one specie can lead to cascade extinction, reducing network stability \citep{Dunne2002} and, if the specie is sensitive, the functional resistance.
-In addition, the recovery resilience and resistance of a system depend if different species perform complementary functions (i.e. functional redundancy) or respond in different ways to perturbation \citep{Winfree2009}; it means resistance increase when the network are dominated by non-specialized interactions \citep{Oliver2015}.
+Because different species are normally distributed together limiting one another \parencite{Clark2014a}, consider biotic interactions across trophic levels is essential to predict species distribution \parencite{VanderPutten2010}, as well as understand its impact on delayed biodiversity response \parencite{Essl2015}.
+For example, trees competition for soil nitrogen has amplified climate debt, but it varies depending on the resource \parencite{Bertrand2016}.
+Species interaction itself is determined by multiple mechanisms \parencite[for an overview]{Louthan2015} and a shift from single-species distribution to community distribution is suggested \parencite{Cazelles2016}.
+In a interaction network, the loss of one specie can lead to cascade extinction, reducing network stability \parencite{Dunne2002} and, if the specie is sensitive, the functional resistance.
+In addition, the recovery resilience and resistance of a system depend if different species perform complementary functions (i.e. functional redundancy) or respond in different ways to perturbation \parencite{Winfree2009}; it means resistance increase when the network are dominated by non-specialized interactions \parencite{Oliver2015}.
 
 \subsection{Abiotic Mechanisms}
 
 Abiotic or physical mechanisms can also shape delayed biotic response and ecological resilience, in which a better quality environment will support plant development and therefore its resistance to perturbation.
-At the soil level, for example, nitrogen availability can limite the growth of trees \citep{Sullivan2013} and high nitrogen content and low acidity soils impact both species sensitivity and competition, amplifying the climate debt \citep{Bertrand2016}.
-Likewise, less suitable climates constrained demographic strategies, increasing retrogression and vulberability of plant species \citep{Csergo2017}  and increase in the severity of climate events inflated climate debt \citep{Bertrand2016}.
+At the soil level, for example, nitrogen availability can limite the growth of trees \parencite{Sullivan2013} and high nitrogen content and low acidity soils impact both species sensitivity and competition, amplifying the climate debt \parencite{Bertrand2016}.
+Likewise, less suitable climates constrained demographic strategies, increasing retrogression and vulberability of plant species \parencite{Csergo2017}  and increase in the severity of climate events inflated climate debt \parencite{Bertrand2016}.
 
-Because environmental heterogeneity increases overall species richness \citep{Stein2014}, the resistance of a system is enhanced by functional redundancy \citep{Oliver2015}.
-Environmental heterogeneity also provides a range of microclimatic refugia, which allow species to persist locally to climate changes \citep{Maclean2015}; however, \citet{Bertrand2016} found that microclimatic refugia plays a minor role comparing with other determinants of climatic debt.
-Ecosystem loss and degradation are mechanisms that contribute to loss and decrease in species diversity \citep{Essl2015}, as well as decrease landscape connection.
-Disconnected landscapes have then slow recovery resilience of a system after perturbation, i.e., low functional connectivity \citep{Oliver2015}.
+Because environmental heterogeneity increases overall species richness \parencite{Stein2014}, the resistance of a system is enhanced by functional redundancy \parencite{Oliver2015}.
+Environmental heterogeneity also provides a range of microclimatic refugia, which allow species to persist locally to climate changes \parencite{Maclean2015}; however, \textcite{Bertrand2016} found that microclimatic refugia plays a minor role comparing with other determinants of climatic debt.
+Ecosystem loss and degradation are mechanisms that contribute to loss and decrease in species diversity \parencite{Essl2015}, as well as decrease landscape connection.
+Species in disconnected landscapes have then slow recovery resilience of a system after perturbation, i.e., low functional connectivity \parencite{Oliver2015}.
+
+Disturbance can be positive and negative or neutral. Intermediate disturbance hypothesis
+
+Types of disturbance
+
+Mechanisms of transition away from post-distrubance
+
+New paragraph: Human-induced drivers
+
+What is it?
+
+Types of human disturbance
+
+Importance to know these mechanisms -> Management (point to the next section)
+
 
 - Disturbance
 Is important according to Essl but was important according to Bertrand
+
+according to Pulsford et al. (2016), six main mechanisms of transition away from a post-disturbance community:
+(i) pulse events with rapid state shifts
+(ii) stochastic community drift
+(iii) facilitation
+(iv) competition
+(v) the influence of the initial composition of a post-disturbance community.
+(vi) stabilizing processes such as biological legacies, inhibition or continuing disturbance
+
 
 \textit{Human-induced drivers} \\
 - Land use by Goring and William 2017 \\
@@ -153,11 +185,12 @@ Four major strategies are available to mitigate carbon emissions through forestr
 http://onlinelibrary.wiley.com/doi/10.1111/j.1752-4571.2010.00157.x/full \\
 http://www.sciencedirect.com/science/article/pii/S0006320715301762
 
-Interesting argument about who should peak do winners from \citet{Webster2017}. They say that \textit{Predict-and-prescribe management may erode diversity by focusing on ‘winners’}.
+Interesting argument about who should peak do winners from \textcite{Webster2017}. They say that \textit{Predict-and-prescribe management may erode diversity by focusing on ‘winners’}.
 
-Forest management in a theoretical view was actually not very much explored and so I consider it a kind of gap we should better explore. Read \citet{Becknell2015} for an overview.
+Forest management in a theoretical view was actually not very much explored and so I consider it a kind of gap we should better explore. Read \textcite{Becknell2015} for an overview.
 
 paper:Temporal stability in forest productivity increases with tree diversity due to asynchrony in species dynamics
+paper: CLIMATE CHANGE AND FORESTS OF THE FUTURE: MANAGING IN THE FACE OF UNCERTAINTY
 
 However, this translation is limited by significant knowledge gaps including the following: (i) difficulties in detecting changes in resilience (Batt et al. 2013), (ii) a lack of evidence and agreement to support successful preventative management actions (Barrett et al. 2014) and (iii) the need to work across multiple geopolitical scales to achieve effective management (Servos et al. 2013). (In Rhodes 2015 at app eco)
 
@@ -173,7 +206,7 @@ Lire toute le mail que je vais arriver avoir une bonne base pour discuter ici.
 
 \section{Theoretical approach}\label{ta}
 
-Read the section \textit{recent developments in predicting changes in species distribution} from \citet{Ehrlen2015}
+Read the section \textit{recent developments in predicting changes in species distribution} from \textcite{Ehrlen2015}
 
 \subsection{Range dynamics theory}
 
@@ -181,20 +214,17 @@ What theories can help us to describe species range under climate change?\\
 How to integrate forest management in this theory?\\
 -> Metapopulation dynamics theory <-
 
-\subsection{Disturbance}
-Pass through the main disturbance theories basing mainly in \citet{Pulsford2016}
-
 \subsection{Resilience}\label{res}
 
-A classical definition of resilience in ecology is the ability of ecosystems to absorb changes and still persist \citep{Holling1973}.
-The concept was further developed in other context (e.g. social-ecological systems), and a more contemporary definition considers resilience as (i) the amount of disturbance the system can absorb, (ii) the degree the system is able to self-organize and (iii) the degree of learning capacity to adapt to disturbance \citep{Cumming2011}.
-We have therefore two concepts, the time to \textbf{recovery} to stability and accommodated external changes \citep{pimm1984,Folke2002} and the \textbf{resistance} of a particular ecological state to change \citep{Peterson1998}.
-Although \citet{Oliver2015} treat both resistance and recovery as related aspects of resilience, I prefer to keep these concepts separated in (i) recovery resilience (or engineering resilience) and (ii) resistance where both are englobed in ecological resilience \citep{Hodgson2015,Nimmo2015}.
-Ecological resilience can be affected by different mechanisms from species to landscape levels, but biodiversity shows to be crucial to maintain long-term resilience of ecosystem services \citep{Oliver2015}.
+A classical definition of resilience in ecology is the ability of ecosystems to absorb changes and still persist \parencite{Holling1973}.
+The concept was further developed in other context (e.g. social-ecological systems), and a more contemporary definition considers resilience as (i) the amount of disturbance the system can absorb, (ii) the degree the system is able to self-organize and (iii) the degree of learning capacity to adapt to disturbance \parencite{Cumming2011}.
+We have therefore two concepts, the time to \textbf{recovery} to stability and accommodated external changes \parencite{pimm1984,Folke2002} and the \textbf{resistance} of a particular ecological state to change \parencite{Peterson1998}.
+Although \textcite{Oliver2015} treat both resistance and recovery as related aspects of resilience, I prefer to keep these concepts separated in (i) recovery resilience (or engineering resilience) and (ii) resistance where both are englobed in ecological resilience \parencite{Hodgson2015,Nimmo2015}.
+Ecological resilience can be affected by different mechanisms from species to landscape levels, but biodiversity shows to be crucial to maintain long-term resilience of ecosystem services \parencite{Oliver2015}.
 
 It is also important to not confuse recovery resilience with stability of a system.
 Recovery resilience is the rate and extent of ``restoration'' of a system while stability is when the system maintains stable following small perturbations over time.
-Before introduce the method to calculate recovery resilience, we must know what is the equilibrium and stability (\hyperlink{box1}{Box 1}) of a system, as well as these measures are relative and careful must be taken when choosing \textit{resilience of what to what} \citep{Carpenter2001}.
+Before introduce the method to calculate recovery resilience, we must know what is the equilibrium and stability (\hyperlink{box1}{Box 1}) of a system, as well as these measures are relative and careful must be taken when choosing \textit{resilience of what to what} \parencite{Carpenter2001}.
 
 \begin{tcolorbox}
 \hypertarget{box1}{Box 1}. Equilibrium and Stability
@@ -213,7 +243,7 @@ E &= mc^2 & \text{Formula of the universe}
 \textbf{(iii)} But how to calculate it in a analytical way?
 To implement the results from these or other studies in management projects, it is necessary to disentangle the many meanings and measures of resilience and related stability concepts (In Mori at TREE).
 Now introduce the calculus of $\lambda$ by Jacobian matrix (\hyperlink{box2}{Box 2}).
-The Jacobian matrix has been used in different applications, from local models [...] to meta-ecosystems models \citep{Gravel2016}
+The Jacobian matrix has been used in different applications, from local models [...] to meta-ecosystems models \parencite{Gravel2016}
 
 \subsection{Transition period - Alternative Stable States?}
 The existence of single equilibria is still often assumed in the literature, with critical implications for conservation and restoration. -- An important feature of this concept (resilience) is the emphasis on possible alternative system properties that are associated with renewal and reorganization after disturbance (In Mori 2016 at TREE)
@@ -230,6 +260,7 @@ For precautionary biodiversity management, the identification of robust early-wa
 
 Explain here where I am going to work and also why I am choosing this area.
 
+Nice review about boreal forest in \parencite{Price2013}
 \section{Methods}
 
 Here we see a briefly presentation of possible methods will be used in the thesis.
@@ -243,7 +274,7 @@ Morin et thuiller 2009:{What then are the best strategies for obtaining accurate
 
 \subsubsection{Species Distribution Models}\label{sdm}
 
-Nice resume about SDM in \citet{Moran-Ordonez2016}.
+Nice resume about SDM in \textcite{Moran-Ordonez2016}.
 
 \subsubsection{Integral Projection Models}
 
@@ -275,6 +306,6 @@ Finally, I will try to introduce my PhD reflexions into the big picture of ecolo
 \footnotetext{The three functions of a thesis, by Stephen Heard at the \href{https://scientistseessquirrel.wordpress.com}{Scientist Sees Squirrel}'s blog}
 
 \clearpage
-\bibliography{/users/wvieira/Documents/mendeley_bibtex/Thesis.bib}
+\printbibliography
 
 \end{document}

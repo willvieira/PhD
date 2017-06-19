@@ -32,8 +32,9 @@ myplot(x = sch$year,
        ylim = c(1, 13.5),
        xlab = "time (year)",
        ylab = "frequency (log)",
-       type = "l")
-lines(isi$year, log(isi$results), lty = 2)
+       type = "l",
+       lwd = 2)
+lines(isi$year, log(isi$results), lty = 2, lwd = 2)
 legend("topleft", legend=c("Scholar", "ISI"), lty = 1: 2, cex = 0.95, bty = "n")
 dev.off()
 embed_fonts("/Users/wvieira/Documents/GitHub/PhD/litRev/img/fig1.pdf", outfile="/Users/wvieira/Documents/GitHub/PhD/litRev/img/fig1_em.pdf")
