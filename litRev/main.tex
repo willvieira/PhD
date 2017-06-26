@@ -19,18 +19,19 @@
 \maketitle
 
 \begin{abstract}
-
-\textbf{TODO}: \\
-- Forest productivity \\
-- Theoretical approach (SDM, resilience calculus, alternative stable state and early warning signals) \\
-- All study case: Québec Forest resource \\
-- All methods \\
-- Better description of thesis structure \\
-- Abstract \\
-- Short reference style \\
-- Change \LaTeX color syntax in Atom
-
+Shift in species distribution under climate change has been largely predicted by species distribution models, where biotic and physics mechanisms at fine- and landscape scale leads to an improvement in forecast.
+However, the potential of forest management to mitigate climate change impacts on forest dynamics remains poorly understood.
+My primary objective is to test if forest management can increase the speed of transition from temperate to boreal forests observed in the North Eastern America.
+By using theoretical models parameterized from a forest inventory database, I expect to find a positive effect of forest management on accelerating forest migration towards the north.
+As an outcome, I will create a decision make tool to improve management strategies that take climate change into account.
 \end{abstract}
+
+%\textbf{TODO}: \\
+%- Forest productivity \\
+%- Theoretical approach (SDM, resilience calculus, alternative stable state and early warning signals) \\
+%- Abstract \\
+
+\tableofcontents
 
 %logo
 \vfill
@@ -38,10 +39,6 @@
 \centering\includegraphics[width=16cm]{img/logo.pdf}
 \end{figure}
 \thispagestyle{empty} %no page number in the first page
-\clearpage
-
-\thispagestyle{empty}
-\tableofcontents
 \clearpage
 
 % START DOCUMENT
@@ -55,7 +52,7 @@
 Climate change is an increasing trending topic in both non-scientific \parencite{Capstick2015} and scientific environment (Figure \ref{fig:fig1}), transforming our world as a metamorphosis of practice and acting \parencite{Beck2016}.
 In the holocene epoch, the world's climate has never been completely stable, mainly impacted by different forces as, e.g., orbital, solar and volcanic \parencite{Wanner2008}.
 However, in the last 200 years humans activities are contributing to increase the concentration of greenhouse gases, which can lead to increase the mean temperature, changes in precipitation patters and the strength of extreme climate events \parencite{Cubasch2013}.
-These changes on climate are not only impacting the functionality of ecosystems and their capacity to provide essential ecological services for human well-being \parencite{Cardinale2012}, but also (surprisingly) the risk of death in humans \parencite{Mora2017}.
+These changes on climate are not only impacting the functionality of ecosystems and their capacity to provide essential ecological services for human well-being \parencite{Cardinale2012}, but also (surprisingly) the risk of human's death \parencite{Mora2017}.
 
 \begin{wrapfigure}{r}{0.38\textwidth}
     \centering
@@ -64,11 +61,11 @@ These changes on climate are not only impacting the functionality of ecosystems 
     \label{fig:fig1}
 \end{wrapfigure}
 
-Recent global changes have an impact on different biological mechanisms and an immediate key question is to understand the patters of this process.
+Recent global changes have an impact on different biological mechanisms, then an immediate key question is to understand the patters of this process.
 Impacts of climate change go from local species constraints \parencite[e.g. low regeneration;][]{Treyger2011}, shift in species' range \parencite{Boisvert-Marsh2014,Monleon2015} and in community composition \parencite{Dieleman2015}, to range retractions and extinction \parencite{Thomas2006}, modifying biodiversity in all scales \parencite{Penuelas2013}.
 To understand this link, climate variables are often used as predictors of trees site occupancy \parencite{Canham2010} and range limits \parencite{Morin2015}, in which, modeling approach projects a range shift to both higher elevations and higher latitudes under climate change \parencite{Chen2011}.
 
-Species distribution models (SDM; defined in section \ref{sdm}) is one of the most popular method to predict species' range shift under climate change, providing a wide range of applications, as in biodiversity conservation and management \parencite{Guisan2005,Guisan2013}.
+Species distribution models (SDM) is one of the most popular method to predict species' range shift under climate change, providing a wide range of applications, as in biodiversity conservation and management \parencite{Guisan2005,Guisan2013}.
 However, these models are generally phenomenological and  distributed at equilibrium with climate \parencite[e.g.][]{Pigot2013}, being an issue when species observation does not reflect its niche \parencite{Schurr2012}.
 Furthermore, they do not consider important determinants of range limits as demography \parencite{Louthan2015}, ecological constraints \parencite{Wisz2013,Pigot2013} and species absences data \parencite{Koshkina2017}, inducing non-accurately projection of the future spatial distribution of a species \parencite{Tavecchia2016}.
 Considering this determinants, trees' migration rate following climate change will be slower than predicted \parencite{Bertrand2011,Sittaro2017}, increasing the climatic debt \parencite{Bertrand2016}.
@@ -102,32 +99,30 @@ During these first few months of reading, I asked myself the following questions
 
 Mechanisms shaping delayed biotic response and ecological resilience act at different scales and usually they interact with each other across scales, which makes the process sometime difficult to track and therefore to mitigate.
 Furthermore, there is a focus attention in mechanisms at the metapopulation level where local mechanisms are often ignored \parencite{Hylander2013}; it creates a knowledge gap in understanding all the possibles mechanisms as well as its interactions.
-In this context, I will start my thesis trying to identify how we can increase forest resilience by managing these mechanisms, or more specific, how to decrease the recovery time of a system from a disturbance to a steady state (theories described in section \ref{ta}).
-Here, I present some mechanisms that may be affecting the delayed response to climate change, as well as forest resilience, in which may become possible topics I will be testing during my thesis using SDM approach, working both at local and large scale.
+In this context, I will start my thesis trying to identify how we can increase forest resilience by managing these mechanisms, or more specifically, how to decrease the recovery time of a system from a disturbance to a steady state (theories described in section \ref{ta}).
+Here, I present some mechanisms that may be affecting the delayed response to climate change, as well as forest resilience, in which may become possible topics I will be testing during my thesis using SDM approach, working both at local and large scale. \\
 
-\subsection{Biotic Mechanisms}
-
+\textbf{Biotic Mechanisms} \\
 Biotic mechanisms change the response from individual and population species to community level.
 At the individual scale, the lifecycle elements of any species, represented by demography patters, is a mechanism able to alter the time response from environmental perturbations \parencite{Bertrand2016}.
 For example, species with a high growth rate will recover faster \parencite{Grman2010}, in which we can expect a high recovery resilience; the allee effect can, however, induce the opposite effect by reducing mean vital rates \parencite{Dennis2002}.
 In parallel, the sensitivity of a species also plays an important role in its response to perturbations \parencite{Oliver2015,Bertrand2016}; sensitive species respond faster and also has a high recovery resilience.
 Alternatively, both species (with high growth and sensitivity) have a low resistance to environmental changes; it means that, if they have a low adaptive phenotypic plasticity, they will not be able to survive.
-Phenotypic plasticity is the (behavior, morphology or physiology) change of an individual in response to the environmental change \parencite{Price2003}; this adaptive process, together with evolutionary adaptation \parencite{Bertrand2016} are mechanisms that increase both species resistance and recovery resilience \parencite{Essl2015,Oliver2015}.
+Phenotypic plasticity is the behavior, morphology or physiology change of an individual in response to the environmental change \parencite{Price2003}; this adaptive process, together with evolutionary adaptation \parencite{Bertrand2016} are mechanisms that increase both species resistance and recovery resilience \parencite{Essl2015,Oliver2015}.
 
 In a metapopulation level, high genetic variability increase both resistance and recovery resilience of species \parencite{Hylander2013,Oliver2015}.
 Dispersal mechanisms can affect genetic variability (the low exchange between individuals, the low variability), in which together with the low dispersal ability of forest species, can lead to an increase in climate debt \parencite{Hylander2013,Bertrand2016}.
 Dispersion itself is a key mechanisms that can increase range shift under climate change \parencite{Gonzalez-Varo2017}. Yet, this mechanism is poorly supported by data; alternatively, species’ demographic rates are sufficient to predict population spread when dispersal data is absent \parencite{Hemrova2017}.
 In addition to dispersion, the effective population size also affect genetic variability \parencite{Oliver2015}, where small populations increase the likelihood for inbreeding and hence the extinction risk \parencite{Nieminen2001}.
-These individual and populational mechanisms are, however, rarely affecting species alone; instated there must be interactions between them \parencite{Hylander2013}, as well as extra mechanisms acting from different scales and origins.
+These individual and populational mechanisms are, however, rarely affecting species alone; instead there must be interactions between them \parencite{Hylander2013}, as well as extra mechanisms acting from different scales and origins.
 
 Because different species are normally distributed together limiting one another \parencite{Clark2014a}, consider biotic interactions across trophic levels is essential to predict species distribution \parencite{VanderPutten2010}, as well as understand its impact on delayed biodiversity response \parencite{Essl2015}.
 For instance, trees competition for soil nitrogen has amplified climate debt, but it varies depending on the resource \parencite{Bertrand2016}.
 Generally, species interaction itself is determined by multiple mechanisms \parencite[for an overview]{Louthan2015} and a shift from single-species distribution to community distribution is suggested \parencite{Cazelles2016}.
 In interaction networks, the loss of one specie can lead to cascade extinction, reducing the network stability \parencite{Dunne2002} and, if the specie is sensitive, the functional resistance.
-In addition, the recovery resilience and resistance of a system depend if different species perform complementary functions (i.e. functional redundancy) or respond in different ways to perturbation \parencite{Winfree2009}; it means resistance increase when the network are dominated by non-specialized interactions \parencite{Oliver2015}.
+In addition, the recovery resilience and resistance of a system depend if different species perform complementary functions (i.e. functional redundancy) or respond in different ways to perturbation \parencite{Winfree2009}; it means resistance increase when the network are dominated by non-specialized interactions \parencite{Oliver2015}.\\
 
-\subsection{Abiotic Mechanisms}
-
+\textbf{Abiotic Mechanisms}\\
 Abiotic or physical mechanisms can also shape delayed biotic response and ecological resilience, in which a better quality environment will support plant development and therefore its resistance to perturbation.
 At the soil level, for example, nitrogen availability can limit the growth of trees \parencite{Sullivan2013} and high nitrogen content and low acidity soils impact both species sensitivity and competition, amplifying the climate debt \parencite{Bertrand2016}.
 Likewise, less suitable climates constrained demographic strategies, increasing retrogression and vulnerability of plant species \parencite{Csergo2017} and increase the severity of climate events, inflating climate debt \parencite{Bertrand2016}.
@@ -138,10 +133,10 @@ Environmental heterogeneity also provides a range of microclimatic refugia, whic
 Ecosystem loss and degradation are mechanisms that contribute to loss and decrease in species diversity \parencite{Essl2015}, as well as decrease landscape connection.
 Species in disconnected landscapes have then slow recovery resilience after perturbation, that is, low functional connectivity \parencite{Oliver2015}.
 
-Disturbance can have different sources (natural or anthropic) and the response of forest to disturbance can be positive or negative (or even neutral) depending on the intensity of disturbance.
+Disturbance can have different sources (natural or anthropic) and the response of forest to disturbance can be positive, negative or even neutral depending on the intensity of disturbance.
 Natural disturbance are diverse and normally act quickly with high effect as, e.g., fire, flooding, pest outbreaks.
-These disturbances are often negative as generate decline in species density, community richnesses and connectivity, in other words, reduce forest resilience \parencite{Buma2011,Essl2015} but see \parencite{Bertrand2016}.
-However, according to the famous intermediate disturbance hypothesis, too little disturbance induces competitive exclusion and and too much disturbance long-lived species elimination \parencite{Grime1973,Horn1975,Connell1978}; which means that between extremes higher species richness is expected and hence higher forest resilience.
+These disturbances are often negative as generate decline in species density, community richnesses and connectivity, in other words, reduce forest resilience \parencite{Buma2011,Essl2015} but see \textcite{Bertrand2016}.
+However, according to the famous intermediate disturbance hypothesis, too little disturbance induces competitive exclusion and and too much disturbance long-lived species elimination \parencite{Grime1973,Horn1975,Connell1978}; between extremes, higher species richness is expected and hence higher forest resilience.
 Human-induced disturbances is becoming increasingly frequent and, not surprisingly, climate change is one of the most important \parencite{Bellard2012}.
 But beyond that, human's disturbance is present almost everywhere, from local impacts, as soil degradations, to global ones, as mining disaster \parencite{Garcia2017}; it implies that all mechanisms of disturbance, as well as its interaction \parencite{Goring2017}, has to be considered to a better understand of forest resilience and, hence, biodiversity management.
 
@@ -149,7 +144,8 @@ But beyond that, human's disturbance is present almost everywhere, from local im
 
 Forest managers have an important (and challenging) mission to create strategies that will both adapt and mitigate forest under climate change \parencite{Millar2007}.
 Mitigative practices are often addressed, forest management can affect carbon cycle and retention, hydrology dynamics and the maintenance of rich suitable habitats \parencite{Becknell2015}; however, adaptive ones are not that evident.
-Currently, management practices are usually based in mechanisms of immediate action-effects and not in theoretical concepts; also, some factors are more amenable to manage (as e.g. genetic variability) than others \parencite[e.g. individual sensitivity, presence of alternative stable states;][]{Oliver2015}.
+Currently, management practices are usually based in mechanisms of immediate action-effects and not in theoretical concepts.
+Also, some factors are more amenable to manage (as e.g. genetic variability) than others \parencite[e.g. individual sensitivity, presence of alternative stable states;][]{Oliver2015}.
 Therefore, a theoretical approach can improve our understand of forest management and help we move towards a more sustainable intervention.
 
 Looking analytically, practices as plantation, cutting and pre-commercial thinning can be used to change the mechanisms of colonization, perturbation and succession, respectively (Figure \ref{fig:fig2}).
@@ -169,7 +165,7 @@ For instance, theoretical methods, based in a macrosystem ecology approach, can 
 Briefly, data synthesis can combine different methods as monitoring networks, remote-sensing, field studies and modeling to create an integrative approach able to evaluate forest change under different contexts \parencite{Becknell2015}.
 Furthermore, ecological conditions, economic trends, policy and social priorities can influence forest management, where these practices vary in intensity, spatial extent and in frequency \parencite{Becknell2015}.
 
-The adaptation process described above has two interpretations, the first one is a directed management to whereas the manager wants to go, mainly based in productivity of target species.  Instated, the second one is a natural adaptation, which includes acclimatization, ecological reorganization and evolution through natural selection \parencite{Webster2017}.
+The adaptation process described above has two interpretations, the first one is a directed management to whereas the manager wants to go, mainly based in productivity of target species.  instead, the second one is a natural adaptation, which includes acclimatization, ecological reorganization and evolution through natural selection \parencite{Webster2017}.
 The Predict-and-prescribe approach aims to protect target species based in predicting future environmental conditions, however, the uncertainty of predictions still high, hence the effectiveness of this approach is limited \parencite{Schindler2015}.
 Based on the portfolio theory, a successful approach happens when a diversity of portfolios environments, species, and communities promote a wide diversity of options, where in the end, nature is the one that peaks the ``winners'' \parencite{Webster2017}.
 
@@ -190,112 +186,118 @@ Based on the portfolio theory, a successful approach happens when a diversity of
 
 \section{Theoretical approach}\label{ta}
 
-Read the section \textit{recent developments in predicting changes in species distribution} from \textcite{Ehrlen2015}
+\textbf{Metapopulation dynamics theory} \\
+Metapopulation theory, or a population of populations \parencite{Levins1968}, is simply represented by patches that are either occupied or not.
+Further extended by \textcite{Holt2000a}, the follow metapopulation dynamic equation has its parameters as a function of landscape position along the gradient \textit{(E)}:
 
-\subsection{Range dynamics theory}
+\begin{align}
+\frac{dp(E)}{dt} = \underbrace{c(E)p(E)[1 - p(E)]}_\text{colonization} - \underbrace{e(E)p(E)}_\text{extinction}
+\end{align}
 
-What theories can help us to describe species range under climate change?\\
-How to integrate forest management in this theory?\\
--> Metapopulation dynamics theory <-
+Let \textit{p} be the fraction of patches occupied at a given time, each unoccupied patch \textit{[1 - p(E)]} can become occupied with a defined colonization rate \textit{c(E)}, in function of already occupied patches \textit{p(E)}. In the other way, each occupied patch can become unoccupied with a defined extinction rate \textit{e(E)}, in function of already occupied patches.
 
-\subsection{Resilience}\label{res}
+Solving equation (1) to equilibrium, we obtain the follow equation, which is pretty straightforward in the interaction between colonization and extinction:
 
+\begin{align}
+\hat{p}(E) = 1 - \frac{e(E)}{c(E)}
+\end{align}
+
+In the context of forest management, we can analytically joint some practices into the metapopulation theory, and that is why I will do in the first chapter.
+For example the colonization rate \textit{c(E)} can be decomposed in the sum of natural colonization by migration \textit{I(E)} with human colonization by plantation \textit{P(E)}: $c(E) = I(E) + P(E)$.
+The same can be done for all transition processes, as represented in Figure \ref{fig:fig2}.
+
+%Now that we know how to relate metapopulation dynamics and forest management, we must talk how it can change forest resilience. \\
+
+\textbf{Resilience}\label{res} \\
 A classical definition of resilience in ecology is the ability of ecosystems to absorb changes and still persist \parencite{Holling1973}.
 The concept was further developed in other context (e.g. social-ecological systems), and a more contemporary definition considers resilience as (i) the amount of disturbance the system can absorb, (ii) the degree the system is able to self-organize and (iii) the degree of learning capacity to adapt to disturbance \parencite{Cumming2011}.
 We have therefore two concepts, the time to \textbf{recovery} to stability and accommodated external changes \parencite{pimm1984,Folke2002} and the \textbf{resistance} of a particular ecological state to change \parencite{Peterson1998}.
 Although \textcite{Oliver2015} treat both resistance and recovery as related aspects of resilience, I prefer to keep these concepts separated in (i) recovery resilience (or engineering resilience) and (ii) resistance where both are englobed in ecological resilience \parencite{Hodgson2015,Nimmo2015}.
 Ecological resilience can be affected by different mechanisms from species to landscape levels, but biodiversity shows to be crucial to maintain long-term resilience of ecosystem services \parencite{Oliver2015}.
-
 It is also important to not confuse recovery resilience with stability of a system.
 Recovery resilience is the rate and extent of ``restoration'' of a system while stability is when the system maintains stable following small perturbations over time.
-Before introduce the method to calculate recovery resilience, we must know what is the equilibrium and stability (\hyperlink{box1}{Box 1}) of a system, as well as these measures are relative and careful must be taken when choosing \textit{resilience of what to what} \parencite{Carpenter2001}.
+%Before introduce the method to calculate recovery resilience, we must understand the perturbation dynamics (\hyperlink{box1}{Box 1}) of a system, as well as this measures is relative and careful must be taken when choosing \textit{resilience of what to what} \parencite{Carpenter2001}.
 
-\begin{tcolorbox}
-\hypertarget{box1}{Box 1}. Equilibrium and Stability
-\begin{align}
-E &= mc^2 & \text{Formula of the universe}
-\end{align}
-\end{tcolorbox}
+%\begin{tcolorbox}
+%\hypertarget{box1}{Box 1}. Perturbation dynamics
 
-\begin{tcolorbox}
-\hypertarget{box2}{Box 2}. Environmental transition (see Oliver2015)
-\begin{align}
-E &= mc^2 & \text{Formula of the universe}
-\end{align}
-\end{tcolorbox}
+%\end{tcolorbox}
+Measure resilience can be sometimes mathematically difficult, however, with help from computational ecology, this calculus is becoming more accessible.
+To summarize, after a tiny perturbation to equilibrium, the linearization of the dynamic of this perturbation, given by the eigenvalue, is the recovery resilience rate.
+The eigenvalue, obtained by the Jacobian matrix, has been used in different applications, from local models to meta-ecosystems models \parencite{Gravel2016} \\
 
-\textbf{(iii)} But how to calculate it in a analytical way?
-To implement the results from these or other studies in management projects, it is necessary to disentangle the many meanings and measures of resilience and related stability concepts (In Mori at TREE).
-Now introduce the calculus of $\lambda$ by Jacobian matrix (\hyperlink{box2}{Box 2}).
-The Jacobian matrix has been used in different applications, from local models [...] to meta-ecosystems models \parencite{Gravel2016}
+\textbf{Alternative Stable States} \\
+In contrast of what is often assumed in the literature, systems can have multiple equilibria and alternative states can be reached after a perturbation.
+This implies that recovery resilience does not need to return to equilibrium but can go to an alternative one based in the renewal and reorganization after disturbance \parencite{Mori2016a}.
+In the forest management context, resilience-based management will not just seek the old equilibrium but the most sustainable one after a disturbance \parencite{ChapinIII2009}.
 
-\subsection{Transition period - Alternative Stable States?}
-The existence of single equilibria is still often assumed in the literature, with critical implications for conservation and restoration. -- An important feature of this concept (resilience) is the emphasis on possible alternative system properties that are associated with renewal and reorganization after disturbance (In Mori 2016 at TREE)
-
-Resilience-based management does not typically seek to increase the rate of return to an original state, which often implicitly assumes the existence of a single equilibrium, but instead recognizes that many natural systems could have multiple attractors [2, 3]. (In Mori 2016 at TREE)
-
-\subsection{Early warnings?}
-
-Resilience indicators: prospects and limitations for early warnings of regime shifts
-
-For precautionary biodiversity management, the identification of robust early-warning signals (e.g., critical slowing down of recovery rates after perturbations) of approaching thresholds (tipping points) of losses of biodiversity or ecosystem services [9] is urgently needed (in Essl2015)
+%\textbf{Early warnings?} \\
+%For precautionary biodiversity management, the identification of robust early-warning signals (e.g., critical slowing down of recovery rates after perturbations) of approaching thresholds (tipping points) of losses of biodiversity or ecosystem services [9] is urgently needed (in Essl2015)
 
 \section{Study case: the Quebec forest resource}
 
-Explain here where I am going to work and also why I am choosing this area.
+The present forest in the Québec province is mainly occupied by temperate species, with a land cover over 200 000 km$^2$ \parencite{Boulay2015}.
+Further than climate impacts on temperate forests \parencite{McKenney2011}, clear-cutting and colonization after fire disturbances are changing forest composition \parencite{Dupuis2011}.
+It happens because temperate forests are distributed in the region with more human demography concentration, instead, boreal forests distribution is farther north, where climate changes has a stronger affect.
+According to \textcite{Price2013}, models and observations has indicated that boreal forests will continue to be exposed to warmer temperatures compared with other biomes.
 
-May Robert's project help?!
+Both temperate, boreal and mixed forests are culturally, ecologically and economically important for the province.
+For example, white pine is a cultural species for the Kitcisakik Algonquin community in Québec \parencite{Uprety2013}, but clearly, economic pressures plays a more important role.
+The Canadian forest sector is dominated by the industrial forestry model, where the economical value is emphasized over cultural and ecological ones \parencite{Howlett2001}, even though, sometimes, ecosystems services' value can be higher \parencite{Costanza1997}.
+In this context where both global change and forest management are a strong influence to the Québec forest resource, this area will be an important study case to answer my questions.
 
-Nice review about boreal forest in \parencite{Price2013}
+%\section{Methods}
+%Here we see a briefly presentation of possible methods will be used in the thesis.
 
-\section{Methods}
-Here we see a briefly presentation of possible methods will be used in the thesis.
+%\subsection{Modeling}
 
-\subsection{Modeling}
+%Why and how modeling?\\
+%Morin et thuiller 2009:{What then are the best strategies for obtaining accurate predictions for changes in the distributions of deciduous temperate trees? At the scale of the geographic distribution of species, no experiments in situ can be reasonably carried out to predict possible range shifts (Woodward 1987). Modeling therefore appears the most feasible and efficient way to establish useful predictions (Lovejoy and Hannah 2005, Thuiller 2007), and several kinds of models have been developed during the previous decade for this purpose. As reviewed by Midgley et al. (2007), these models fall into two main classes: vegetation-type models (dynamic global vegetation models [DGVMs]) and species-specific models (niche-based and process-based).}
 
-Why and how modeling?\\
-Morin et thuiller 2009:{What then are the best strategies for obtaining accurate predictions for changes in the distributions of deciduous temperate trees? At the scale of the geographic distribution of species, no experiments in situ can be reasonably carried out to predict possible range shifts (Woodward 1987). Modeling therefore appears the most feasible and efficient way to establish useful predictions (Lovejoy and Hannah 2005, Thuiller 2007), and several kinds of models have been developed during the previous decade for this purpose. As reviewed by Midgley et al. (2007), these models fall into two main classes: vegetation-type models (dynamic global vegetation models [DGVMs]) and species-specific models (niche-based and process-based).}
+ %L’article de Ashraf et Maclean porte sur un modèle de simulation de croissance d’arbres individuels en fonction des changements climatiques.  %Leur modèle a été développé avec une technologie d’intelligence artificielle.
 
- L’article de Ashraf et Maclean porte sur un modèle de simulation de croissance d’arbres individuels en fonction des changements climatiques.  Leur modèle a été développé avec une technologie d’intelligence artificielle.
+%\subsubsection{Species Distribution Models}\label{sdm}
 
-\subsubsection{Species Distribution Models}\label{sdm}
-
-Nice resume about SDM in \textcite{Moran-Ordonez2016}.
+%Nice resume about SDM in \textcite{Moran-Ordonez2016}.
 
 
-\subsubsection{Integral Projection Models}
+%\subsubsection{Integral Projection Models}
 
-the predictive powers of state and transition models are relatively low and their ability to deal with uncertainty is limited (Bashari, Smith and Bosch, 2008; Phillips, 2011).
+%the predictive powers of state and transition models are relatively low and their ability to deal with uncertainty is limited (Bashari, Smith and Bosch, 2008; Phillips, 2011).
 
-\subsection{Bayesian approach}
+%\subsection{Bayesian approach}
 
-\textit{I should be writing and not playing with \LaTeX}
+%\textit{I should be writing and not playing with \LaTeX}
 
 \section{Thesis structure}
 
-The first part of the thesis will be a general introduction where I will probably use a part of this document and present the big picture of my thesis.
+The first part of the thesis will be a general introduction where I will present the big picture of my thesis.
 I believe the introduction part of a thesis is an easy way to welcome the reader through my work, however in the actual context of digital era, no one really reads a whole PhD thesis.
 An alternative approach to (sleepers) general introductions that, according to Stephen Heard\footnotemark{} no one reads but the author, is to publish it as a general papers in a scientific vulgarization journal.
 In this way, my work will be easier to understand by both academics and general public, more accessible and the introduction part more useful.
 
-The first chapter will try to answer the question \textit{How can forest management increase forest resilience to climate change?}.
+The first chapter will try to answer the question \textit{How can forest management increase forest resilience to climate change?}
 The paper will work with a four states transition model and, by analytical analysis, we will try (i) to identify the most important mechanisms shaping transition processes, (ii) measure how can forest management change these mechanisms, and (iii) understand the impact of these changes on forest resilience.
 Furthermore, as a study case in the North Eastern America forest, we will run simulations with the most effective management practices, found from the analytical analysis, under different scenarios of climate change.
 We expect forest management to enhance recovery resilience by the hypothesis that plantation and thinning will increase colonization and succession (This chapter answers questions I and II from section \ref{obj}).
 
-In the second chapter I will build a landscape Integral Projection Model (IPM) that will take forest management, species interaction and natural and human disturbance into account.
-State and transition models has a low predictive power and limited ability to track uncertainty \parencite{Bashari, Smith and Bosch, 2008; Phillips, 2011}, IPMs are then an interesting alternative that can increase both of these weakness \parencite{}.
-We expect... (This chapter answers questions III and IV from section \ref{obj}).
-
-The third chapter I am going to build another model but in a local scale. \textit{I have to find a good biological reason for that}.
-
-The fourth chapter will then integrate both landscape and local model into one. Here I will also track the uncertainty of the model by bayesian approach.
-
-Finally, I will try to introduce my PhD reflexions into the big picture of ecology, management and ecosystem services. In an integrative and synthetic approach (more appropriate for a \textit{Forum} section), I will discuss my main results, its application and mainly the point of depart for future prosperous work. (This chapter answers question V from section \ref{obj}).
-
 \footnotetext{The three functions of a thesis, by Stephen Heard at the \href{https://scientistseessquirrel.wordpress.com}{Scientist Sees Squirrel}'s blog}
 
-\clearpage
+In the second chapter I will build a landscape Integral Projection Model (IPM) that will take forest management, species interaction and natural and human disturbance into account.
+State and transition models has a low predictive power and limited ability to track uncertainty \parencite{Bashari2008,Phillips2011}, IPMs are then an interesting alternative that can increase both of these weakness \parencite{Elderd2016}.
+Based in the model and field data, we expect to setup the relationship between forest management, climate change and disturbance to better predict range distribution (This chapter answers questions III and IV from section \ref{obj}).
+
+The third chapter is dedicated to another IPM but at fine-scale.
+As discussed earlier, fine-scale mechanisms are often ignored \parencite{Hylander2013}; at this time, we will consider, beyond forest management, species interaction and disturbance, the demography patterns of trees species.
+The objective of this chapter is similar to the previous one, but focusing in a different level of details.
+As local demography patterns can influence the metapopulation, we expect a shift in the interaction between forest management, climate change and disturbance; these new mechanisms can improve the prediction of range distribution.
+
+However, consider fine-scale patters alone will not be the solution, alternatively, integrate models at multiple levels can be very powerful. The fourth chapter will, based in a metapopulation framework \parencite{Talluto2016a}, integrate both landscape model (from chapter 2) and local model (from chapter 3) into one.
+More than a better prediction of species' range distribution, these approach allows a translucent track of uncertainty using Bayesian approach, where new methodology may be presented (This chapter answers question IV from section \ref{obj}).
+
+Finally, I will try to introduce my PhD reflexions into the big picture of ecology, management and ecosystem services. In an integrative and synthetic approach (more appropriate for a \textit{Forum} section), I will discuss my main results, its application and mainly the point of depart for future prosperous work.
+In parallel, I will create a decision make tool to improve management strategies that take the main outcomes of my thesis into account (This chapter answers question V from section \ref{obj}).
+
 \printbibliography
 
 \end{document}
