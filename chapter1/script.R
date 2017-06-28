@@ -1,7 +1,7 @@
 #'---
 #'title: "Linking SDMs and forest management"
 #'author: Willian Vieira
-#'output: github_document
+#'output: pdf_document
 #'---
 #'<!--Rscript -e "rmarkdown::render('script.R')" -->
 #'
@@ -211,3 +211,4 @@ for(i in 1:7) {
 #' - [ ] In `Test2` add different lines for each fixed value: 0.2, 0.5, 0.8
 #' - [ ] Solve differntial equantion to equilibrium
 #' - [ ] Use `expand.grid` to test all possible variation between parameters
+#'
