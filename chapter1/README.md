@@ -10,6 +10,6 @@ To see the progress with the [`model`](https://github.com/willvieira/PhD/blob/ma
 TODO
 ====
 
--   [ ] In `Test2` add different lines for each fixed value: 0.2, 0.5, 0.8
--   [ ] Solve differntial equantion to equilibrium
+-   [X] In `Test2` add different lines for each fixed value: 0.2, 0.5, 0.8
+-   [ ] Solve differential equation to equilibrium
 -   [ ] Use `expand.grid` to test all possible variation between parameters

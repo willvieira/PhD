@@ -19,6 +19,7 @@
 #'
 # call the model
 source("vissault_model.R")
+library(graphicsutils)
 #'
 #'#################################
 #'## Running the model to equilibrium
@@ -181,7 +182,7 @@ for(i in 1:7) {
 #Fixed value for all parameters from 0 to 1.7
 int <- 2
 parSeq <- seq(0, 1.7, 0.1)
-fixPar <- 0.5 #fixed value of all other parameters
+fixPar <- c(0.2, 0.5, 0.8, 1.2) #fixed value of all other parameters
 #'
 #running eigenvalue to each parameter
 pars = get_pars(ENV1 = 0, ENV2 = 0, params, int = int)
@@ -189,26 +190,36 @@ eql <- as.list("NA")
 df <- data.frame()
 for(k in 1: length(pars)) {
 	pars = get_pars(ENV1 = 0, ENV2 = 0, params, int = int)
-	pars[-k] <- fixPar
-	for(j in 1: length(parSeq)) {
-		pars[k] = parSeq[j]
-		df[j, 1]	<- parSeq[j]
-		df[j, 2] <- get_eq(pars)$ev
-	}
+  for(l in 1: length(fixPar)) {
+    pars[-k] <- fixPar[l]
+  	for(j in 1: length(parSeq)) {
+  		pars[k] = parSeq[j]
+  		df[j, 1]	<- parSeq[j]
+  		df[j, l + 1] <- get_eq(pars)$ev
+  	 }
+  }
 eql[[k]] <- df
 }
 #'
 #plot
+Pars <- c(expression(alpha), expression(alpha), expression(beta),
+          expression(beta), expression(theta), expression(theta),
+          expression(epsilon))
 par(family = 'serif', cex = 0.8, mfrow = c(3,3), mai = c(0.3, .5, .2, .2))
 for(i in 1:7) {
-	plot(eql[[i]], type = "l", lwd = 1.7, xlab = "", ylab = "", ylim = c(-.5,0.05))
+	plot(0, type = "n", lwd = 1.7, xlab = "", ylab = "", xlim = c(0, 1.7), ylim = c(-0.4, 0.01))
   if(i == 4) mtext(side = 2, "largest real part", line = 2.1, cex = 0.9)
   legend("bottomleft", Pars[i], bty = "n")
+      points(eql[[i]]$V1, eql[[i]]$V2, type = "l", lwd = 1.5)
+      points(eql[[i]]$V1, eql[[i]]$V3, type = "l", lwd = 1.5, col = 2)
+      points(eql[[i]]$V1, eql[[i]]$V4, type = "l", lwd = 1.5, col = 3)
+      points(eql[[i]]$V1, eql[[i]]$V5, type = "l", lwd = 1.5, col = 4)
 }
+plot(c(-1, 1), c(-1, 1), ann = FALSE, axes = FALSE, type = "n")
+legend(-1, 1, fixPar, lty = 1, col = c(1:4), bty = "n", cex = 0.95)
 
 #'#TODO
 #'
-#' - [ ] In `Test2` add different lines for each fixed value: 0.2, 0.5, 0.8
 #' - [ ] Solve differntial equantion to equilibrium
 #' - [ ] Use `expand.grid` to test all possible variation between parameters
 #'
