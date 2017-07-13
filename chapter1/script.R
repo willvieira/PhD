@@ -19,7 +19,6 @@
 #'
 # call the model
 source("vissault_model.R")
-library(graphicsutils)
 #'
 #'#################################
 #'## Running the model to equilibrium
@@ -218,8 +217,43 @@ for(i in 1:7) {
 plot(c(-1, 1), c(-1, 1), ann = FALSE, axes = FALSE, type = "n")
 legend(-1, 1, fixPar, lty = 1, col = c(1:4), bty = "n", cex = 0.95)
 
+#'
+#'## Using `expand.grid` to test all parameters combination
+#'
+#' Now we saw the variation of each parameter, we want to see every parameter changing with each other
+#' to test all combinations of parameters.
+#' Here I will test the parameters variation from 0.09 to 0.99.
+#'
+
+#parameters
+parm <- seq(0.09, 0.99, 0.15)
+
+#expand grid function
+sim <- expand.grid(alphab = parm,
+                   alphat = parm,
+                   betab = parm,
+                   betat = parm,
+                   theta = parm,
+                   thetat = parm,
+                   eps = parm)
+dim(sim)
+
+#get eigenvalue for each variation (time ~ 36 hrs in one core):
+#'
+#system.time(for(i in 1: dim(sim)[1]) {
+#  sim[i, 8] <- get_eq(sim[i,])$ev
+#  cat(100*i/dim(sim)[1], "%", "\r")
+#})
+#'
+#save the output
+#save(sim, file = "data/ev.RData")
+#'
+#load the output
+#load("data/ev.RData")
+
+#' ## Analysing the results
+
 #'#TODO
 #'
 #' - [ ] Solve differntial equantion to equilibrium
-#' - [ ] Use `expand.grid` to test all possible variation between parameters
 #'

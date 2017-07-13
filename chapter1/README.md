@@ -12,4 +12,4 @@ TODO
 
 -   [X] In `Test2` add different lines for each fixed value: 0.2, 0.5, 0.8
 -   [ ] Solve differential equation to equilibrium
--   [ ] Use `expand.grid` to test all possible variation between parameters
+-   [X] Use `expand.grid` to test all possible variation between parameters
