@@ -4,6 +4,7 @@
 ### Mac files ###
 .DS_Store
 *.DS_Store
+script1.R
 
 ### C ###
 # Prerequisites
