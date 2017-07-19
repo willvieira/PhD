@@ -8,6 +8,8 @@ To see the progress with the [`model`](https://github.com/willvieira/PhD/blob/ma
 ## TODO
 
 -   [X] In `Test2` add different lines for each fixed value: 0.2, 0.5, 0.8
--   [ ] Solve differential equation to equilibrium
 -   [X] Use `expand.grid` to test all possible variation between parameters
+-   [X] Analyze the model response to each management practice separated
+-   [ ] Solve differential equation to equilibrium
 -   [ ] Sensitivity analysis of the parameters variation
+-   [ ] Interpret biologically the results
