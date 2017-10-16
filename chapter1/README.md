@@ -4,12 +4,3 @@ Willian Vieira
 ## Work in development
 
 To see the progress with the [`model`](https://github.com/willvieira/PhD/blob/master/chapter1/vissault_model.R), analysis and everything else, you can take a look in the rendered [script.html](https://github.com/willvieira/PhD/blob/master/chapter1/script.html).
-
-## TODO
-
--   [X] In `Test2` add different lines for each fixed value: 0.2, 0.5, 0.8
--   [X] Use `expand.grid` to test all possible variation between parameters
--   [X] Analyze the model response to each management practice separated
--   [ ] Solve differential equation to equilibrium
--   [ ] Sensitivity analysis of the parameters variation
--   [ ] Interpret biologically the results

@@ -1,9 +1,9 @@
 #'---
 #'title: "Linking State Transition Models and forest management"
 #'author: Willian Vieira
-#'date: "June, 28 2017 - last update: August, 10 2017"
+#'date: "June, 28 2017 - last update: September, 17 2017"
 #'output:
-#'    html_document:
+#'    pdf_document:
 #'      toc: true
 #'---
 #'<!--Rscript -e "rmarkdown::render('script.R')" -->
@@ -79,24 +79,86 @@ behavior <- function(ENV1, ENV2) {
        type = "l",
        lwd = 1.5,
        ylim = c(0, 1),
-       col = 2,
        ylab = "",
        xlab = "")
-  lines(dm2[, 2], col = 3, lwd = 1.5)
-  lines(dm2[, 3], col = 4, lwd = 1.5)
-  lines(dm2[, 4], col = 5, lwd = 1.5)
+  lines(dm2[, 2], col = 2, lwd = 1.5)
+  lines(dm2[, 3], col = 3, lwd = 1.5)
+  lines(dm2[, 4], col = 4, lwd = 1.5)
 }
 #'
 #+ fig.width = 9.5, fig.height = 8
 Ev1 <- c(-1.75, -1.5, -1.25, -1, -0.75, -0.5, 0, 0.5, 1)
+
 par(mfrow = c(3, 3))
 for(i in 1: length(Ev1)) {
   behavior(ENV1 = Ev1[i], ENV2 = 0)
   mtext(paste("ENV1 = ", Ev1[i], sep = ""), 3, cex = 0.85)
+  abline(h = seq(0, 1, 0.2), lty = 3, col = "gray")
   if(i == 4) mtext("State proportion", 2, line = 2, cex = 0.8)
-  if(i == 1) legend(35, 0.45, c("B", "T", "M", "R"), col = 2:5, lty = 1, bty = "n", cex = 0.8)
+  if(i == 8) mtext("Time (year*5)", 1, line = 2, cex = 0.8)
+  if(i == 1) legend(35, 0.45, c("B", "T", "M", "R"), col = 1:4, lty = 1, bty = "n", cex = 0.8)
 }
 #'
+#'##################################
+#'# Model behavior depending on climate
+#'#################################
+#'
+#' Now, let's take a look in the parameter variation depending on the climate envelop.
+#'
+# Varing temperature (ENV1) from -2 to 2 and then plot each parameter variation
+tempVar <- seq(-2, 2, length.out = 100)
+dat.Par <- data.frame(matrix(NA, ncol = length(pars) - 2, nrow = length(tempVar)))
+names(dat.Par) <- names(pars)[1:7]
+
+#loop
+for(i in 1: length(tempVar)) {
+  dat.Par[i, ] = get_pars(ENV1 = tempVar[i], ENV2 = 0, params, int = 3)[1:7]
+}
+
+# plot
+#+ fig.width = 6, fig.height = 5.5
+plot(tempVar, dat.Par[, 1], type = "l", lwd = 1.5,
+     ylab = "parameter value", xlab = "Temperature variation", ylim = c(0, 1))
+for(i in 2: 7) {
+  points(tempVar, dat.Par[, i], type = "l", col = i, lwd = 1.5)
+}
+legend("topright", names(pars)[1:7], col = 1:7, lwd = 1.5, bty = "n")
+abline(v = c(-1.35, -.65, 0.45), lty = 3, col = "gray")
+mtext(c("Boreal", "Mixed", "Temperate"), 3, at = c(-1.35, -0.65, 0.45))
+#'
+#' With an idea of the parameter variation depending on the climate, we can see the model equilibrium
+#' depending on the climate.
+#'
+# Varing temperature (ENV1) from -2 to 2 and then plot the eq proportion + eigenvalue
+dat.eq <- data.frame(matrix(NA, ncol = 6, nrow = 100))
+names(dat.eq) <- c("temp", "B", "T", "M", "R", "ev")
+dat.eq$temp <- seq(-2, 1.2, length.out = 100)
+
+for(i in 1: dim(dat.eq)[1]) {
+  pars = get_pars(ENV1 = dat.eq$temp[i], ENV2 = 0, params, int = 3)
+  # option to add management (change 0 for a value of management intensity)
+  pars[c(2, 6, 7)] <- c((pars[2]*0) + pars[2], (pars[6]*0) + pars[6], (pars[7]*0) + pars[7])
+  eq <- get_eq(pars)
+  dat.eq[i, 2] <- eq$eq[1]
+  dat.eq[i, 3] <- eq$eq[2]
+  dat.eq[i, 4] <- eq$eq[3]
+  dat.eq[i, 5] <- 1 - eq$eq[1] - eq$eq[2] - eq$eq[3]
+  dat.eq[i, 6] <- eq$ev
+}
+
+# plot
+#+ fig.width = 7, fig.height = 5.5
+par(mar = c(4.5, 4.5, 2, 4.5))
+plot(dat.eq$temp, dat.eq$B, type = "l", lwd = 1.5, ylim = c(0, 1), xlab = "Latitudinal gradient", ylab = "Occupancy")
+for(i in 3: 5) points(dat.eq$temp, dat.eq[, i], type = "l", lwd = 1.5, col = i - 1)
+par(new = T)
+plot(dat.eq$temp, dat.eq$ev, type = "l", lty = 2, axes = F, xlab = NA, ylab = NA)
+axis(side = 4)
+mtext(side = 4, line = 3, 'Largest real part')
+legend(-.8, 0, legend = names(dat.eq[-1]), lwd = 1.5, col = 1:4, lty = c(1, 1, 1, 1, 2), bty = "n")
+abline(v = c(-1.35, -0.65, 0.45), lty = 3, col = "gray")
+mtext(c("Boreal", "Mixed", "Temperate"), 3, at = c(-1.35, -0.65, 0.45))
+
 #'#################################
 #'# Add hypothetical disturbance
 #'#################################
@@ -168,6 +230,95 @@ legend(34, 0.25, c("B", "T", "M", "R"), col = 2:5, bty = "n", lty = 1)
 #' this [vignette](https://cran.r-project.org/web/packages/rootSolve/vignettes/rootSolve.pdf)
 #' of the `rootSolve` package.
 #'
+#' Update (October 2017)
+#' ## Integrating forest management and biological mechanisms
+#'
+# function to plot parameter variation
+managXmechan <- function(par1, ENV1, managVar, legend = NULL) { # managVar = vector with same lenght of parameters
+
+  library(RColorBrewer)
+  if(is.null(legend)) legend = "FALSE"
+
+  # defining plot title (local environment)
+  if(ENV1 < -0.9) {
+    title <- "Boreal"
+  }else title <- "Mixed"
+
+  # parameter increasing
+  dat <- data.frame(matrix(NA, ncol = 50, nrow = 9))
+  dat$X1 = get_pars(ENV1 = ENV1, ENV2 = 0, params, int = 3)
+  for(j in 1:9) {
+    sq <- seq(0, managVar[j], length.out = 49)
+    for(i in 1: length(sq)) {
+      dat[j, i+1] <- dat[j, 1] + (dat[j, 1] * sq[i])
+    }
+  }
+
+  # plot
+  Col <- brewer.pal(4,"Dark2")
+
+  par(family = "serif", mar = c(2, 4, 1, 1))
+  plot(0, pch = "", xlim = c(0, 50), xaxt = "n", ylim = c(0, 1.8), type = "l", xlab = "", ylab = "parameter value")
+  for(i in 1: length(par1)) points(c(1:50), dat[par1[i], ], type = "l", col = Col[i])
+  mtext(title, 3)
+  mtext("Foret management increasing (%) ", 1, cex = 1.1)
+  mtext(expression(symbol("\256")), side = 1, line = 0, at = 45)
+  if(legend == "TRUE") {
+    legend("topleft", legend = c("alphaT", "betaT", "thetaT", "epsB"), lty = 1, col = Col, bty = "n", cex = 0.8)
+  }
+}
+#'
+# Used management
+par(mfrow = c(1, 2))
+managXmechan(par1 = c(2, 4, 6, 7), ENV1 = - 1.54, managVar = c(1, 8, 0.4, 4, 0.4, 0.3, 3, 3, 3), legend = TRUE)
+managXmechan(par1 = c(2, 4, 6, 7), ENV1 = .24, managVar = c(1, 1, 0.4, 0.4, 0.4, 0.3, 3, 3, 3))
+
+# Extreme management
+managXmechan(par1 = c(2, 4, 6, 7), ENV1 = - 1.54, managVar = c(1, 120, 0.4, 59, 0.6, 0.37, 42, 3, 3))
+managXmechan(par1 = c(2, 4, 6, 7), ENV1 = .24, managVar = c(1, 0.3, 0.4, 1.7, 0.6, 0.34, 175, 3, 3))
+
+
+# function to plot parameter variation
+managXmechan <- function(par1, ENV1, managVar, legend = NULL) { # managVar = vector with same lenght of parameters
+
+  library(RColorBrewer)
+  if(is.null(legend)) legend = "FALSE"
+
+  # defining plot title (local environment)
+  if(ENV1 < -0.9) {
+    title <- "Boreal"
+  }else title <- "Mixed"
+
+  ff <- function(x, y) {
+    (0.02*x) + y
+  }
+
+  # parameter increasing
+  dat <- data.frame(matrix(NA, ncol = 51, nrow = 9))
+  dat$X1 = get_pars(ENV1 = ENV1, ENV2 = 0, params, int = 3)
+  x <- 1:50
+
+  for(j in 1:9) {
+    sq <- seq(0, managVar[j], length.out = 49)
+    for(i in 1: length(sq)) {
+      dat[j, -1] <- ff(x, dat[j, 1])
+    }
+  }
+
+  # plot
+  Col <- brewer.pal(4,"Dark2")
+
+  par(family = "serif", mar = c(2, 4, 1, 1))
+  plot(0, pch = "", xlim = c(0, 50), xaxt = "n", ylim = c(0, 1.8), type = "l", xlab = "", ylab = "parameter value")
+  for(i in 1: length(par1)) points(c(1:51), dat[par1[i], ], type = "l", col = Col[i])
+  mtext(title, 3)
+  mtext("Foret management increasing (%) ", 1, cex = 1.1)
+  mtext(expression(symbol("\256")), side = 1, line = 0, at = 45)
+  if(legend == "TRUE") {
+    legend("topleft", legend = c("alphaT", "betaT", "thetaT", "epsB"), lty = 1, col = Col, bty = "n", cex = 0.8)
+  }
+}
+
 #' The choice of parameters is delicate in this kind of "_sensitivity analysis_", then I chose
 #' to do 2 different tests in the parametric variation to simulate the response of resilience
 #' to the increasing in forest management.
@@ -185,7 +336,7 @@ legend(34, 0.25, c("B", "T", "M", "R"), col = 2:5, bty = "n", lty = 1)
 # And environment 1 variation
 int <- 3
 parSeq <- seq(0.01, 1.1, 0.05)
-Ev1 <- c(0, -1.5, -0.75, 0.5)
+Ev1 <- c(0, -1.35, -0.65, 0.45)
 #'
 # running eigenvalue to each parameter
 eql <- as.list("NA")
@@ -217,7 +368,7 @@ for(i in 1: length(pars)) {
   legend(0.005, -.41, st[i], bty = "n")
 }
 #'
-#' **Simulations for different environments (-1.5 for Boreal, -0.75 for Mixed and 0.5 for Temperate)**
+#' **Simulations for different environments (-1.35 for Boreal, -0.65 for Mixed and 0.45 for Temperate)**
 #+ fig.width = 9.5, fig.height = 8
 par(family = 'serif', cex = 1.2, mfrow = c(3,3), mai = c(0.3, .5, .2, .2))
 for(i in 1: length(pars)) {
@@ -225,7 +376,7 @@ for(i in 1: length(pars)) {
   lines(eql[[i]]$V1, eql[[i]]$V4, lwd = 1.5, lty = 2)
   lines(eql[[i]]$V1, eql[[i]]$V5, lwd = 1.5, lty = 3)
   if(i == 4) mtext(side = 2, "largest real part", line = 2.1, cex = 1.2)
-  if(i == 6) legend("bottomright", c("B (-1.5)", "M (-0.75)", "T (0.5)"), lty = 1:3, lwd = 1.5, bty = "n", cex = 1.2)
+  if(i == 6) legend("bottomright", c("B (-1.35)", "M (-0.65)", "T (0.45)"), lty = 1:3, lwd = 1.5, bty = "n", cex = 1.2)
   legend("bottomleft", Pars[i], bty = "n")
   legend(0.01, -.45, st[i], bty = "n")
 }
@@ -276,7 +427,7 @@ parInt <- function(Par1, Par2, ENV1) {
 #'**$\alpha$B and $\alpha$T interaction**
 #'
 #+ fig.width = 5, fig.height = 3
-parInt(1, 2, ENV1 = -1.5)
+parInt(1, 2, ENV1 = -1.35)
 parInt(1, 2, ENV1 = -.75)
 parInt(1, 2, ENV1 = .5)
 #'
@@ -287,13 +438,13 @@ parInt(3, 4, ENV1 = -.75)
 #'
 #' **$\theta$ and $\theta$T interaction**
 #+ fig.width = 5, fig.height = 3
-parInt(5, 6, ENV1 = -1.5)
+parInt(5, 6, ENV1 = -1.35)
 parInt(5, 6, ENV1 = -.75)
 parInt(5, 6, ENV1 = .5)
 #'
 #' **$\epsilon$M and $\epsilon$T interaction**
 #+ fig.width = 5, fig.height = 3
-parInt(9, 8, ENV1 = -1.5)
+parInt(9, 8, ENV1 = -1.35)
 parInt(9, 8, ENV1 = -.75)
 parInt(9, 8, ENV1 = .5)
 #'
@@ -499,32 +650,61 @@ knitr::kable(om)
 sq <- seq(0.1, 1, 0.1) # 0 to 100% for all parameters except epsilon
 sqH <- seq(0.3, 3, 0.3) # 30 to 300% for epsilon
 #'
-# function to get scenarios
-managSim2 <- function(Par1, ENV1, managLimit = NULL) {
+# Varing temperature (ENV1) from -2 to 2 and then plot each parameter variation
+tempVar <- seq(-2, 2, length.out = 100)
+dat.Par <- data.frame(matrix(NA, ncol = length(pars) - 2, nrow = length(tempVar)))
+names(dat.Par) <- names(pars)[1:7]
+
+#loop
+for(i in 1: length(tempVar)) {
+  dat.Par[i, ] = get_pars(ENV1 = tempVar[i], ENV2 = 0, params, int = 3)[1:7]
+}
+
+# plot
+#+ fig.width = 6, fig.height = 5.5
+plot(tempVar, dat.Par[, 1], type = "l", lwd = 1.5,
+     ylab = "parameter value", xlab = "Temperature variation", ylim = c(0, 1))
+for(i in 2: 7) {
+  points(tempVar, dat.Par[, i], type = "l", col = i, lwd = 1.5)
+}
+legend("topright", names(pars)[1:7], col = 1:7, lwd = 1.5, bty = "n")
+abline(v = c(-1.35, -0.65, 0.45), lty = 3, col = "gray")
+mtext(c("Boreal", "Mixed", "Temperate"), 3, at = c(-1.35, -0.65, 0.45))
+
+# define relative variation for each parameter
+managSim <- function(Par1, ENV1, managVar) {
+
+  # defining management increasing for each parameter
+  oP <- 0
+  managV <- rep(NA, length(pars))
+  managV[Par1] <- managVar
+  managV[-Par1] <- 0
+
+  # defining plot title (local environment)
+  if(ENV1 < -0.9) {
+    title <- "Boreal"
+  }else if(ENV1 > -0.2) {
+    title <- "Temperate"
+  }else title <- "Mixed"
+
   # data frame
-  dat <- data.frame(x1 = get_pars(ENV1 = ENV1, ENV2 = 0, params, int = 3))
-  for(i in 1: length(sq)) {
-    dat[, i+1] <- dat$x1 + (dat$x1*sq[i])
+  dat <- data.frame(matrix(NA, ncol = 16, nrow = length(pars)))
+  dat$X1 = get_pars(ENV1 = ENV1, ENV2 = 0, params, int = 3)
+  for(j in 1: length(pars)) {
+    sq <- seq(0.1, managV[j], length.out = 15)
+    for(i in 1: length(sq)) {
+      dat[j, i+1] <- dat[j, 1] + (dat[j, 1] * sq[i])
+    }
   }
-
-  # update disturbance (30 to 300%)
-  for(i in 1: length(sqH)) {
-    dat[c(7, 8, 9), i+1] <- dat$x1[7] + (dat$x1[7]*sqH[i])
-  }
-
-  # definitions
-  if(!is.null(managLimit)) {
-    manLim = managLimit
-  }else manLim = length(sq)
 
   # data frame
   # X2 = Par1 eigenvalue; X3:X6 = Par1 state proportion
-  egv <- data.frame(matrix(ncol = 6, nrow = manLim + 1))
-  egv[1] <- c(0, (sq[1: manLim] * 100))
+  egv <- data.frame(matrix(ncol = 6, nrow = dim(dat)[2]))
+  egv$X1 <- seq(1, dim(dat)[2])
   pars <- get_pars(ENV1 = ENV1, ENV2 = 0, params, int = 3)
 
-  # get eigenvalue for Par1
-  for(i in 1: (manLim + 1)) {
+  # get eigenvalue and satate proportion for Par1
+  for(i in 1: (length(sq) + 1)) {
     pars[Par1] <- dat[Par1, i]
     eq <- get_eq(pars)
     egv[i, 2] <- eq$ev #eigenvalue
@@ -532,92 +712,276 @@ managSim2 <- function(Par1, ENV1, managLimit = NULL) {
     egv[i, 6] <- 1 - sum(eq$eq) # R
   }
 
-  # get transition probability
-  if(ENV1 == -1.5) {
-    a = 2; b = 3 # B -> M
-    c = 2; d = 1; e = 1; f = 3 # B -> R -> M
-    legd = c("B -> M", "B -> R -> M")
-  }
-  if(ENV1 == -0.75 | ENV1 == 0.5) {
-    a = 3; b = 4 # M -> T
-    c = 3; d = 1; e = 1; f = 4# M -> R -> T
-    legd = c("M -> T", "M -> R -> T")
-  }
-
-  prob <- data.frame(matrix(ncol = 5, nrow = manLim +1))
-  prob[1] <- c(0, (sq[1: manLim] * 100))
+  # get probability transition
+  prob <- data.frame(matrix(ncol = 3, nrow = length(sq) + 1))
+  prob[1] <- seq(1, dim(dat)[2])
   pars <- get_pars(ENV1 = ENV1, ENV2 = 0, params, int = 3)
   eq <- get_eq(pars)[[1]]
-  for(k in 1: (manLim + 1)) {
+  for(k in 1: (length(sq)+ 1)) {
     pars[Par1] <- dat[Par1, k]
     eq <- get_eq(pars)[[1]]
     MAT <- get_matrix(ENV1 = ENV1, ENV2 = 0, pars = pars, eq = eq)$MAT
-    prob[k, 2] <- MAT[a, b]
-    prob[k, 3] <- MAT[c, d] * MAT[e, f]
+    prob[k, 2] <- MAT[2, 3]
+    prob[k, 3] <- MAT[3, 4]
   }
 
   # plot 1
-  par(mfrow = c(1, 3), family = "serif", mar = c(4, 4, 1, 1), cex = 1.2)
-  plot(egv$X1, egv$X2, type = "l", ylim = c(-0.27, -0.01), lwd = 1.75,
+  par(mfrow = c(1, 3), family = "serif", mar = c(2, 4, 1, 1), cex = 1.2)
+  plot(egv$X1, egv$X2, type = "l", xaxt = "n", ylim = c(-0.27, -0.01), lwd = 1.75,
        xlab = "", ylab = "Largest real part")
 
   #plot 2
-  plot(egv$X1, egv$X3, type = "l", ylim = c(0, 1), lwd = 1.75,
-       xlab = "Foret management rate (%)", ylab = "State proportion")
+  plot(egv$X1, egv$X3, type = "l", ylim = c(0, 1), lwd = 1.75, xaxt = "n",
+       xlab = "", ylab = "Occupancy")
   lines(egv$X1, egv$X4, lwd = 1.75, col = 2)
   lines(egv$X1, egv$X5, lwd = 1.75, col = 3)
   lines(egv$X1, egv$X6, lwd = 1.75, col = 4)
 
   legend("topleft", c("B", "T", "M", "R"), lty = 1, col = c(1:4), bty = "n", cex = 0.9)
-  mtext(paste("ENV1 = ", ENV1, sep = ""), 3)
+  mtext(paste(title, " (", ENV1, ")", sep = ""), 3)
+  mtext("Foret management increasing (%)", 1, cex = 1.1)
 
   #plot 3
-  plot(prob$X1, prob$X2, type = "l", lwd = 1.75, ylim = c(0, 0.14),
+  plot(prob$X1, prob$X2, xaxt = "n", type = "l", lwd = 1.75, ylim = c(0, 0.14),
        col = 3, ylab = "Transition probability", xlab = "")
   lines(prob$X1, prob$X3, lwd = 1.75, col = 2)
-
-  legend("bottomleft", legd, lty = 1, col = c(3, 2), bty = "n", cex = 0.9)
+  legend("topleft", c("B -> M", "M -> T"), lty = 1, col = c(3, 2), bty = "n", cex = 0.9)
 }
 #'
 #' ### Different scenarios
 #'
-#' Considering the original value of parameters by increasing the parameters from 0 to 100%,
-#' we can see the real impact of forest management on recovery resilience.
-#'
 #' #### Scenario 1: &#8593; plantation and &#8593; harvest
 #'
-#+ fig.width = 12, fig.height = 4.5
-managSim2(Par1 = c(2, 8), ENV1 = -1.5)
-managSim2(Par1 = c(2, 9), ENV1 = -0.75)
-managSim2(Par1 = c(2, 9), ENV1 = 0.5)
+#+ fig.width = 12, fig.height = 3.8
+managSim(Par1 = c(2, 7), ENV1 = -1.54, managVar = c(1, 3))
+managSim(Par1 = c(2, 7, 9), ENV1 = 0.24, managVar = c(1, 3, 3))
 #'
 #' #### Scenario 2: &#8593; plantation, &#8593; thinning (M) and &#8593; harvest
-#+ fig.width = 12, fig.height = 4.5
-managSim2(Par1 = c(2, 6, 8), ENV1 = -1.5)
-managSim2(Par1 = c(2, 6, 9), ENV1 = -0.75, managLimit = 6) #limited to 6 because after that the model bugs
-managSim2(Par1 = c(2, 6, 9), ENV1 = 0.5)
+#+ fig.width = 12, fig.height = 3.8
+managSim(Par1 = c(2, 6, 7), ENV1 = -1.54, managVar = c(1, 0.5, 3))
+managSim(Par1 = c(2, 6, 9), ENV1 = 0.24, managVar = c(1, 0.5, 3))
 #'
-#' #### Scenario 3: &#8593; plantation; &#8593; enrichment (B and T) and &#8593; harvest
-#+ fig.width = 12, fig.height = 4.5
-managSim2(Par1 = c(2, 4, 8), ENV1 = -1.5)
-managSim2(Par1 = c(2, 4, 9), ENV1 = -0.75)
-managSim2(Par1 = c(2, 4, 9), ENV1 = 0.5)
+#' #### Scenario 3: &#8593; plantation; &#8593; enrichment (T) and &#8593; harvest
+#+ fig.width = 12, fig.height = 3.8
+managSim(Par1 = c(2, 4, 7), ENV1 = -1.54, managVar = c(1, 1, 3))
+managSim(Par1 = c(2, 4, 9), ENV1 = 0.24, managVar = c(1, 1, 3))
 #'
-#' #### Scenario 4: &#8593; plantation; &#8593; thinning (M); &#8593; enrichment (B and T) and &#8593; harvest
-#+ fig.width = 12, fig.height = 4.5
-managSim2(Par1 = c(2, 6, 4, 8), ENV1 = -1.5)
-managSim2(Par1 = c(2, 6, 4, 9), ENV1 = -0.75)
-managSim2(Par1 = c(2, 6, 4, 9), ENV1 = 0.5)
+#' #### Scenario 4: &#8593; plantation; &#8593; thinning (M); &#8593; enrichment (T) and &#8593; harvest
+#+ fig.width = 12, fig.height = 3.8
+managSim(Par1 = c(2, 6, 4, 7), ENV1 = -1.54, managVar = c(1, 0.6, 0.6, 3))
+managSim(Par1 = c(2, 6, 4, 9), ENV1 = 0.24, managVar = c(1, 0.6, 0.6, 3))
 #'
 #' #### Scenario 5: &#8593; thinning (M); harvest
-#+ fig.width = 12, fig.height = 4.5
-managSim2(Par1 = c(6, 8), ENV1 = -1.5)
-managSim2(Par1 = c(6, 9), ENV1 = -0.75, managLimit = 6)
-managSim2(Par1 = c(6, 9), ENV1 = 0.5)
+#+ fig.width = 12, fig.height = 3.8
+managSim(Par1 = c(6, 7), ENV1 = -1.54, managVar = c(0.6, 3))
+managSim(Par1 = c(6, 9), ENV1 = 0.24, managVar = c(0.6, 3))
 #'
 #' #### Scenario 6: &#8593; harvest
-#+ fig.width = 12, fig.height = 4.5
-managSim2(Par1 = 8, ENV1 = -1.5)
-managSim2(Par1 = 9, ENV1 = -0.75)
-managSim2(Par1 = 9, ENV1 = 0.5)
+#+ fig.width = 12, fig.height = 3.8
+managSim(Par1 = 7, ENV1 = -1.54, managVar = 3)
+managSim(Par1 = c(7, 9), ENV1 = -1, managVar = c(0 ,0))
 #'
+#' ## Impact of each practice and each management scenario on resilience
+#' '(figure to be used in the manuscript)
+#'
+# setting colors (colorFriendly = TRUE)
+library(RColorBrewer)
+colPrac <- brewer.pal(4,"Dark2")
+colManag <- brewer.pal(6, "Set1")
+
+# function
+resilManag <- function(scenario, ENV1, managVar, legend = NULL) { # scenario = list; managVar = vector with same lenght of parameters
+
+  # defining plot title (local environment)
+  if(ENV1 < -0.9) {
+    title <- "Boreal"
+  }else title <- "Mixed"
+
+  if(is.null(legend)) legend <- "FALSE"
+
+  # parameter increasing
+  dat <- data.frame(matrix(NA, ncol = 50, nrow = 9))
+  dat$X1 = get_pars(ENV1 = ENV1, ENV2 = 0, params, int = 3)
+  for(j in 1:9) {
+    sq <- seq(0.1, managVar[j], length.out = 49)
+    for(i in 1: length(sq)) {
+      dat[j, i+1] <- dat[j, 1] + (dat[j, 1] * sq[i])
+    }
+  }
+
+  # table for output
+  egv <- data.frame(matrix(ncol = length(scenario) + 1, nrow = dim(dat)[2]))
+  egv$X1 <- seq(1, dim(dat)[2])
+
+  for(w in 1: length(scenario)) {
+
+    # define parameters for each scenario
+    Par1 <- scenario[[w]]
+
+    # model running
+    pars <- get_pars(ENV1 = ENV1, ENV2 = 0, params, int = 3)
+    # get eigenvalue and satate proportion for Par1
+    for(i in 1: dim(dat)[2]) {
+      pars[Par1] <- dat[Par1, i]
+      eq <- get_eq(pars)
+      egv[i, w + 1] <- eq$ev #eigenvalue
+    }
+  }
+
+  # define color
+  if(length(scenario) == 4) {
+    color <- colPrac
+  }else color <- colManag
+
+  # plot
+  par(family = "serif", mar = c(2, 4, 1, 1), cex = 1.2)
+  plot(egv$X1, egv$X2, type = "l", col = color[1], xaxt = "n", ylim = c(-.135, 0), lwd = 1.75,
+       xlab = "", ylab = "Largest real part")
+  for(k in 3: (length(scenario) + 1)) points(egv$X1, egv[,k], type = "l", lty = k-1, lwd = 1.75, col = color[k - 1])
+  if(legend == TRUE) {
+    if(length(scenario) == 4) {
+    legend("bottomleft", c("Plantation", "Enrichment", "Thinning", "Harvest"), lty = 1:4, col = color, bty = "n", cex = 0.75)
+  }else legend("bottomleft", c("P + H", "P + T + H", "P + E + H", "P + T + E + H", "T + H", "H"), lty = 1:6, col = color, bty = "n", cex = 0.75)
+  }
+  mtext(title, 3)
+  mtext("Foret management increasing (%) ", 1, cex = 1.1)
+  mtext(expression(symbol("\256")), side = 1, line = 0, at = 45)
+
+return(dat[,c(1, 50)])
+}
+#'
+
+managVar <- c(1, 2, .4, .4, .55, .55, 3, 3, 3)
+
+# plot 1
+#+ fig.width = 10, fig.height = 4.5
+par(mfrow = c(2, 2))
+scenario = as.list(c(2, 4, 6, 7))
+resilManag(scenario, ENV1 = -1.54, managVar, legend = TRUE)
+mtext(expression(symbol("\255")), side = 3, line = -2.5, at = 27.5, cex = 1.8)
+
+scenario = as.list(c(2, 4, 6, 9))
+resilManag(scenario, ENV1 = 0.24, managVar)
+mtext(expression(symbol("\255")), side = 3, line = -2.5, at = 11, cex = 1.8)
+
+# plot 2
+#+ fig.width = 10, fig.height = 4.5
+scenarioB <- list(c(2, 7), c(2, 6, 7), c(2, 4, 7), c(2, 4, 6, 7), c(6, 7), 7)
+resilManag(scenarioB, ENV1 = -1.54, managVar, legend = TRUE)
+mtext(expression(symbol("\255")), side = 3, line = -2.5, at = 24, cex = 1.8)
+mtext(expression(symbol("\255")), side = 3, line = -2.5, at = 28, cex = 1.8)
+
+scenarioM <- list(c(2, 9), c(2, 6, 9), c(2, 4, 9), c(2, 4, 6, 9), c(6, 9), 9)
+resilManag(scenarioM, ENV1 = 0.24, managVar)
+mtext(expression(symbol("\255")), side = 3, line = -2.5, at = 9, cex = 1.8)
+
+#######################################################################
+
+# setting colors (colorFriendly = TRUE)
+library(RColorBrewer)
+colPrac <- brewer.pal(4,"Dark2")
+colManag <- brewer.pal(6, "Set1")
+
+# function
+resilManag <- function(scenario, ENV1, managVar, legend = NULL) { # scenario = list; managVar = vector with same lenght of parameters
+
+  # defining plot title (local environment)
+  if(ENV1 < -0.9) {
+    title <- "Boreal"
+  }else title <- "Mixed"
+
+  if(is.null(legend)) legend <- "FALSE"
+
+  ff <- function(x, y) {
+    (0.005*x) + y
+  }
+
+  # parameter increasing
+  dat <- data.frame(matrix(NA, ncol = 51, nrow = 9))
+  dat$X1 = get_pars(ENV1 = ENV1, ENV2 = 0, params, int = 3)
+  x <- 1:50
+
+  for(j in 1:9) {
+    sq <- seq(0, managVar[j], length.out = 49)
+    for(i in 1: length(sq)) {
+      dat[j, -1] <- ff(x, dat[j, 1])
+    }
+  }
+
+  # table for output
+  egv <- data.frame(matrix(ncol = length(scenario) + 1, nrow = dim(dat)[2]))
+  egv$X1 <- seq(1, dim(dat)[2])
+
+  for(w in 1: length(scenario)) {
+
+    # define parameters for each scenario
+    Par1 <- scenario[[w]]
+
+    # model running
+    pars <- get_pars(ENV1 = ENV1, ENV2 = 0, params, int = 3)
+    # get eigenvalue and satate proportion for Par1
+    for(i in 1: dim(dat)[2]) {
+      pars[Par1] <- dat[Par1, i]
+      eq <- get_eq(pars)
+      egv[i, w + 1] <- eq$ev #eigenvalue
+    }
+  }
+
+  # define color
+  if(length(scenario) == 4) {
+    color <- colPrac
+  }else color <- colManag
+
+  # plot
+  par(family = "serif", mar = c(2, 4, 1, 1), cex = 1.2)
+  plot(egv$X1, egv$X2, type = "l", col = color[1], xaxt = "n", ylim = c(-.135, 0), lwd = 1.75,
+       xlab = "", ylab = "Largest real part")
+  for(k in 3: (length(scenario) + 1)) points(egv$X1, egv[,k], type = "l", lty = k-1, lwd = 1.75, col = color[k - 1])
+  if(legend == TRUE) {
+    if(length(scenario) == 4) {
+    legend("bottomleft", c("Plantation", "Enrichment", "Thinning", "Harvest"), lty = 1:4, col = color, bty = "n", cex = 0.8)
+    }else legend("bottomleft", c("P + H", "P + T + H", "P + E + H", "P + T + E + H", "T + H", "H"), lty = 1:6, col = color, bty = "n", cex = 0.8)
+  }
+  mtext(title, 3)
+  mtext("Foret management increasing (%) ", 1, cex = 1.1)
+  mtext(expression(symbol("\256")), side = 1, line = 0, at = 45)
+
+return(dat[,c(1, 51)])
+}
+#'
+
+# plot 1
+scenario = as.list(c(2, 4, 6, 7))
+managVar <- c(1, 2, .4, .4, .55, .55, 3, 3, 3)
+ #managVar = c(1, 120, 0.4, 59, 0.6, 0.37, 42, 3, 3)
+ #managVar = c(1, 0.3, 0.4, 1.7, 0.6, 0.34, 175, 3, 3)
+
+#+ fig.width = 10, fig.height = 4.5
+par(mfrow = c(2, 2))
+resilManag(scenario, ENV1 = -1.54, managVar, legend = TRUE)
+mtext(expression(symbol("\255")), side = 3, line = -2.5, at = 27.5, cex = 1.8)
+resilManag(scenario, ENV1 = 0.24, managVar)
+mtext(expression(symbol("\255")), side = 3, line = -2.5, at = 11, cex = 1.8)
+
+# plot 2
+scenarioB <- list(c(2, 7), c(2, 6, 7), c(2, 4, 7), c(2, 4, 6, 7), c(6, 7), 7)
+scenarioM <- list(c(2, 9), c(2, 6, 9), c(2, 4, 9), c(2, 4, 6, 9), c(6, 9), 9)
+
+#+ fig.width = 10, fig.height = 4.5
+resilManag(scenarioB, ENV1 = -1.54, managVar, legend = TRUE)
+mtext(expression(symbol("\255")), side = 3, line = -2.5, at = 24, cex = 1.8)
+mtext(expression(symbol("\255")), side = 3, line = -2.5, at = 28, cex = 1.8)
+resilManag(scenarioM, ENV1 = 0.24, managVar)
+mtext(expression(symbol("\255")), side = 3, line = -2.5, at = 9, cex = 1.8)
+```
+
+
+## Figure 3
+par(mar = c(4.5, 4.5, 2, 4.5))
+plot(dat.eq$temp, dat.eq$B, type = "l", lwd = 1.5, ylim = c(0, 1), xlab = "Latitudinal gradient", ylab = "Occupancy")
+for(i in 3: 4) points(dat.eq$temp, dat.eq[, i], type = "l", lwd = 1.5, col = i - 1)
+par(new = T)
+plot(dat.eq$temp, dat.eq$ev, type = "l", lty = 2, axes = F, xlab = NA, ylab = NA)
+axis(side = 4)
+mtext(side = 4, line = 3, 'Largest real part')
+legend(-.8, 0, legend = names(dat.eq[c(-1, -5)]), lwd = 1.5, col = 1:3, lty = c(1, 1, 1, 2), bty = "n", cex = 0.8)
