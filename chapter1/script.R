@@ -3,7 +3,7 @@
 #'author: Willian Vieira
 #'date: "June, 28 2017 - last update: September, 17 2017"
 #'output:
-#'    pdf_document:
+#'    html_document:
 #'      toc: true
 #'---
 #'<!--Rscript -e "rmarkdown::render('script.R')" -->
@@ -156,7 +156,7 @@ plot(dat.eq$temp, dat.eq$ev, type = "l", lty = 2, axes = F, xlab = NA, ylab = NA
 axis(side = 4)
 mtext(side = 4, line = 3, 'Largest real part')
 legend(-.8, 0, legend = names(dat.eq[-1]), lwd = 1.5, col = 1:4, lty = c(1, 1, 1, 1, 2), bty = "n")
-abline(v = c(-1.35, -0.65, 0.45), lty = 3, col = "gray")
+abline(v = c(-1.54, -1.09, 0.24, 0.53), lty = 3, col = "gray")
 mtext(c("Boreal", "Mixed", "Temperate"), 3, at = c(-1.35, -0.65, 0.45))
 
 #'#################################
@@ -269,11 +269,14 @@ managXmechan <- function(par1, ENV1, managVar, legend = NULL) { # managVar = vec
 }
 #'
 # Used management
+#+ fig.width = 10, fig.height = 4.5
 par(mfrow = c(1, 2))
 managXmechan(par1 = c(2, 4, 6, 7), ENV1 = - 1.54, managVar = c(1, 8, 0.4, 4, 0.4, 0.3, 3, 3, 3), legend = TRUE)
 managXmechan(par1 = c(2, 4, 6, 7), ENV1 = .24, managVar = c(1, 1, 0.4, 0.4, 0.4, 0.3, 3, 3, 3))
 
 # Extreme management
+#+ fig.width = 10, fig.height = 4.5
+par(mfrow = c(1, 2))
 managXmechan(par1 = c(2, 4, 6, 7), ENV1 = - 1.54, managVar = c(1, 120, 0.4, 59, 0.6, 0.37, 42, 3, 3))
 managXmechan(par1 = c(2, 4, 6, 7), ENV1 = .24, managVar = c(1, 0.3, 0.4, 1.7, 0.6, 0.34, 175, 3, 3))
 
@@ -847,64 +850,79 @@ resilManag <- function(scenario, ENV1, managVar, legend = NULL) { # scenario = l
   mtext("Foret management increasing (%) ", 1, cex = 1.1)
   mtext(expression(symbol("\256")), side = 1, line = 0, at = 45)
 
-return(dat[,c(1, 50)])
 }
 #'
 
 managVar <- c(1, 2, .4, .4, .55, .55, 3, 3, 3)
 
 # plot 1
+scenario1 = as.list(c(2, 4, 6, 7))
+scenario2 = as.list(c(2, 4, 6, 9))
 #+ fig.width = 10, fig.height = 4.5
-par(mfrow = c(2, 2))
-scenario = as.list(c(2, 4, 6, 7))
-resilManag(scenario, ENV1 = -1.54, managVar, legend = TRUE)
+par(mfrow = c(1, 2))
+resilManag(scenario1, ENV1 = -1.54, managVar, legend = TRUE)
 mtext(expression(symbol("\255")), side = 3, line = -2.5, at = 27.5, cex = 1.8)
-
-scenario = as.list(c(2, 4, 6, 9))
-resilManag(scenario, ENV1 = 0.24, managVar)
+resilManag(scenario2, ENV1 = 0.24, managVar)
 mtext(expression(symbol("\255")), side = 3, line = -2.5, at = 11, cex = 1.8)
 
 # plot 2
-#+ fig.width = 10, fig.height = 4.5
 scenarioB <- list(c(2, 7), c(2, 6, 7), c(2, 4, 7), c(2, 4, 6, 7), c(6, 7), 7)
+scenarioM <- list(c(2, 9), c(2, 6, 9), c(2, 4, 9), c(2, 4, 6, 9), c(6, 9), 9)
+
+#+ fig.width = 10, fig.height = 4.5
+par(mfrow = c(1, 2))
 resilManag(scenarioB, ENV1 = -1.54, managVar, legend = TRUE)
 mtext(expression(symbol("\255")), side = 3, line = -2.5, at = 24, cex = 1.8)
 mtext(expression(symbol("\255")), side = 3, line = -2.5, at = 28, cex = 1.8)
-
-scenarioM <- list(c(2, 9), c(2, 6, 9), c(2, 4, 9), c(2, 4, 6, 9), c(6, 9), 9)
 resilManag(scenarioM, ENV1 = 0.24, managVar)
 mtext(expression(symbol("\255")), side = 3, line = -2.5, at = 9, cex = 1.8)
 
 #######################################################################
 
-# setting colors (colorFriendly = TRUE)
-library(RColorBrewer)
-colPrac <- brewer.pal(4,"Dark2")
-colManag <- brewer.pal(6, "Set1")
-
 # function
-resilManag <- function(scenario, ENV1, managVar, legend = NULL) { # scenario = list; managVar = vector with same lenght of parameters
+resilManag <- function(scenario, ENV1, managVar1 = NULL, managVar2 = NULL, incrMethod, legend = NULL) { # scenario = list; managVar = vector with same lenght of parameters
+
+  # setting colors (colorFriendly = TRUE)
+  library(RColorBrewer)
+  colPrac <- brewer.pal(4,"Dark2")
+  colManag <- brewer.pal(6, "Set1")
 
   # defining plot title (local environment)
-  if(ENV1 < -0.9) {
+  if(ENV1 < - 1.2) {
     title <- "Boreal"
-  }else title <- "Mixed"
+  }else if(ENV1 < 0.4) {
+    title <- "Mixed"
+  }else title <- "Temperate"
 
   if(is.null(legend)) legend <- "FALSE"
 
-  ff <- function(x, y) {
-    (0.005*x) + y
+  # parameter increasing (two methods, first increasing by % and second linearly)
+    # method 1
+  if(incrMethod == 1) {
+
+    ff <- function(x, y) {
+      (managVar1*x) + y
+    }
+
+    dat <- data.frame(matrix(NA, ncol = 51, nrow = 9))
+    dat$X1 = get_pars(ENV1 = ENV1, ENV2 = 0, params, int = 3)
+    x <- 1:50
+
+    for(j in 1:9) {
+      for(i in 1: 49) {
+        dat[j, -1] <- ff(x, dat[j, 1])
+      }
+    }
   }
-
-  # parameter increasing
-  dat <- data.frame(matrix(NA, ncol = 51, nrow = 9))
-  dat$X1 = get_pars(ENV1 = ENV1, ENV2 = 0, params, int = 3)
-  x <- 1:50
-
-  for(j in 1:9) {
-    sq <- seq(0, managVar[j], length.out = 49)
-    for(i in 1: length(sq)) {
-      dat[j, -1] <- ff(x, dat[j, 1])
+    # method 2
+  if(incrMethod == 2) {
+    dat <- data.frame(matrix(NA, ncol = 51, nrow = 9))
+    dat$X1 = get_pars(ENV1 = ENV1, ENV2 = 0, params, int = 3)
+    for(j in 1:9) {
+      sq <- seq(0.1, managVar2[j], length.out = 50)
+      for(i in 1: length(sq)) {
+        dat[j, i+1] <- dat[j, 1] + (dat[j, 1] * sq[i])
+      }
     }
   }
 
@@ -933,7 +951,7 @@ resilManag <- function(scenario, ENV1, managVar, legend = NULL) { # scenario = l
   }else color <- colManag
 
   # plot
-  par(family = "serif", mar = c(2, 4, 1, 1), cex = 1.2)
+  par(mar = c(2, 3, 0.8, 0.5), mgp = c(1.5, 0.3, 0), tck = -.01, family = 'serif', cex = 1.2)
   plot(egv$X1, egv$X2, type = "l", col = color[1], xaxt = "n", ylim = c(-.135, 0), lwd = 1.75,
        xlab = "", ylab = "Largest real part")
   for(k in 3: (length(scenario) + 1)) points(egv$X1, egv[,k], type = "l", lty = k-1, lwd = 1.75, col = color[k - 1])
@@ -946,42 +964,82 @@ resilManag <- function(scenario, ENV1, managVar, legend = NULL) { # scenario = l
   mtext("Foret management increasing (%) ", 1, cex = 1.1)
   mtext(expression(symbol("\256")), side = 1, line = 0, at = 45)
 
-return(dat[,c(1, 51)])
 }
 #'
+#' With the last function, we have two ways to calculate the increase in the parameters to simulate
+#' the forest management. The first way is a linear increase with a constant slop determined by `managVar1`.
+#' The second way is a proportional increase with the rate of increase varing from 50% (for thinning)
+#' to 300% (for harvest). The following plots show these parameter variation.
 
-# plot 1
-scenario = as.list(c(2, 4, 6, 7))
-managVar <- c(1, 2, .4, .4, .55, .55, 3, 3, 3)
- #managVar = c(1, 120, 0.4, 59, 0.6, 0.37, 42, 3, 3)
- #managVar = c(1, 0.3, 0.4, 1.7, 0.6, 0.34, 175, 3, 3)
+# method 1
+ff <- function(x, y) {
+  (managVar1*x) + y
+}
 
+managVar1 = 0.005
+dat <- data.frame(matrix(NA, ncol = 51, nrow = 9))
+dat$X1 = get_pars(ENV1 = -1, ENV2 = 0, params, int = 3)
+x <- 1:50
+
+for(j in 1:9) {
+  for(i in 1: 49) {
+    dat[j, -1] <- ff(x, dat[j, 1])
+  }
+}
+
+# method 2
+managVar2 <- c(1, 1, .55, .55, .55, .55, 3, 3, 3)
+dat1 <- data.frame(matrix(NA, ncol = 51, nrow = 9))
+dat1$X1 = get_pars(ENV1 = -1, ENV2 = 0, params, int = 3)
+for(j in 1:9) {
+  sq <- seq(0.1, managVar2[j], length.out = 50)
+  for(i in 1: length(sq)) {
+    dat1[j, i+1] <- dat1[j, 1] + (dat1[j, 1] * sq[i])
+  }
+}
+#'
+# plot
 #+ fig.width = 10, fig.height = 4.5
-par(mfrow = c(2, 2))
-resilManag(scenario, ENV1 = -1.54, managVar, legend = TRUE)
-mtext(expression(symbol("\255")), side = 3, line = -2.5, at = 27.5, cex = 1.8)
-resilManag(scenario, ENV1 = 0.24, managVar)
-mtext(expression(symbol("\255")), side = 3, line = -2.5, at = 11, cex = 1.8)
+par(mfrow = c(1, 2), mar = c(2.8, 3, 1, 0.5), mgp = c(1.5, 0.3, 0), tck = -.01, family = 'serif', cex = 1.2)
+plot(1:51, dat[1, ], type = "l", ylim = c(min(dat), max(dat)), xlab = "Forest management")
+for(i in 2:7) points(1:51, dat[i, ], type = "l", col = i)
+mtext("Method 1", 3)
+plot(1:51, dat1[1, ], type = "l", ylim = c(min(dat1), max(dat1)), xlab = "Forest management",)
+for(i in 2:7) points(1:51, dat1[i, ], type = "l", col = i)
+mtext("Method 2", 3)
+legend("topleft", names(pars)[1:7], col = 1:7, lwd = 1.5, bty = "n", cex = 0.9)
+#'
+# Pratices
+  # method 1
+#+ fig.width = 10, fig.height = 9
+  par(mfrow = c(2, 2))
+  managVar1 = 0.005
+  resilManag(as.list(c(2, 4, 6, 7)), ENV1 = -1.54, managVar1, incrMethod = 1, legend = TRUE)
+  resilManag(as.list(c(2, 4, 6, 7)), ENV1 = -1.09, managVar1, incrMethod = 1)
+  resilManag(as.list(c(2, 4, 6, 9)), ENV1 = 0.24, managVar1, incrMethod = 1)
+  resilManag(as.list(c(2, 4, 6, 9)), ENV1 = 0.53, managVar1, incrMethod = 1)
+  # method 2
+  par(mfrow = c(2, 2))
+  managVar2 <- c(1, 1, .55, .55, .55, .55, 3, 3, 3)
+  resilManag(as.list(c(2, 4, 6, 7)), ENV1 = -1.54, managVar2 = managVar2, incrMethod = 2, legend = TRUE)
+  resilManag(as.list(c(2, 4, 6, 7)), ENV1 = -1.09, managVar2 = managVar2, incrMethod = 2)
+  resilManag(as.list(c(2, 4, 6, 9)), ENV1 = 0.24, managVar2 = managVar2, incrMethod = 2)
+  resilManag(as.list(c(2, 4, 6, 9)), ENV1 = 0.53, managVar2 = managVar2, incrMethod = 2)
 
-# plot 2
-scenarioB <- list(c(2, 7), c(2, 6, 7), c(2, 4, 7), c(2, 4, 6, 7), c(6, 7), 7)
-scenarioM <- list(c(2, 9), c(2, 6, 9), c(2, 4, 9), c(2, 4, 6, 9), c(6, 9), 9)
-
-#+ fig.width = 10, fig.height = 4.5
-resilManag(scenarioB, ENV1 = -1.54, managVar, legend = TRUE)
-mtext(expression(symbol("\255")), side = 3, line = -2.5, at = 24, cex = 1.8)
-mtext(expression(symbol("\255")), side = 3, line = -2.5, at = 28, cex = 1.8)
-resilManag(scenarioM, ENV1 = 0.24, managVar)
-mtext(expression(symbol("\255")), side = 3, line = -2.5, at = 9, cex = 1.8)
-```
-
-
-## Figure 3
-par(mar = c(4.5, 4.5, 2, 4.5))
-plot(dat.eq$temp, dat.eq$B, type = "l", lwd = 1.5, ylim = c(0, 1), xlab = "Latitudinal gradient", ylab = "Occupancy")
-for(i in 3: 4) points(dat.eq$temp, dat.eq[, i], type = "l", lwd = 1.5, col = i - 1)
-par(new = T)
-plot(dat.eq$temp, dat.eq$ev, type = "l", lty = 2, axes = F, xlab = NA, ylab = NA)
-axis(side = 4)
-mtext(side = 4, line = 3, 'Largest real part')
-legend(-.8, 0, legend = names(dat.eq[c(-1, -5)]), lwd = 1.5, col = 1:3, lty = c(1, 1, 1, 2), bty = "n", cex = 0.8)
+# Management interaction
+  # method 1
+  scenarioB <- list(c(2, 7), c(2, 6, 7), c(2, 4, 7), c(2, 4, 6, 7), c(6, 7), 7)
+  scenarioM <- list(c(2, 9), c(2, 6, 9), c(2, 4, 9), c(2, 4, 6, 9), c(6, 9), 9)
+  par(mfrow = c(2, 2))
+  managVar1 = 0.005
+  resilManag(scenarioB, ENV1 = -1.54, managVar1, incrMethod = 1, legend = TRUE)
+  resilManag(scenarioB, ENV1 = -1.09, managVar1, incrMethod = 1)
+  resilManag(scenarioM, ENV1 = 0.24, managVar1, incrMethod = 1)
+  resilManag(scenarioM, ENV1 = 0.53, managVar1, incrMethod = 1)
+  # method 2
+  par(mfrow = c(2, 2))
+  managVar2 <- c(1, 1, .55, .55, .55, .55, 3, 3, 3)
+  resilManag(scenarioB, ENV1 = -1.54, managVar2 = managVar2, incrMethod = 2, legend = TRUE)
+  resilManag(scenarioB, ENV1 = -1.09, managVar2 = managVar2, incrMethod = 2)
+  resilManag(scenarioM, ENV1 = 0.24, managVar2 = managVar2, incrMethod = 2)
+  resilManag(scenarioM, ENV1 = 0.53, managVar2 = managVar2, incrMethod = 2)
