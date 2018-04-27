@@ -35,15 +35,16 @@ get_eq = function(params, y = NULL) {
 	}else(y = y)
 
 	# Get the equilibrium
-	eq = runsteady(y = y, func = model, parms = params, times = c(0, 1000))[[1]]
+	eq = runsteady(y = y, func = model, parms = params, times = c(0, 1000))
 
 	# Compute the Jacobian
-	J = jacobian.full(y = eq, func = model, parms = params)
+	J = jacobian.full(y = eq[[1]], func = model, parms = params)
 
 	# Stability
 	ev = max(Re(eigen(J)$values)) #in case of complex eigenvalue, using Re to get the first real part
 
-	return(list(eq = eq, ev = ev))
+	# return equilibrium, largest eigenvalue and time to reach equilibrium
+	return(list(eq = eq[[1]], ev = ev, TRE = attributes(eq)$steps))
 }
 
 #################################
@@ -134,6 +135,6 @@ get_pars = function(ENV1, ENV2, params, int) {
 		rownames(MAT) <- nm
 		colnames(MAT) <- nm
 
-		return(list(eq=c(R,B,M,T),MAT=MAT))
+		return(list(eq=c(B,M,T,R),MAT=MAT))
 
 	}
